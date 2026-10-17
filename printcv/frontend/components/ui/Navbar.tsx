@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { href: '/galeria', label: 'Galeria' },
   { href: '/loja', label: 'Loja' },
   { href: '/orcamento', label: 'Orçamento' },
+  { href: '/sobre', label: 'Sobre' },
 ]
 
 export function Navbar() {
@@ -28,11 +29,10 @@ export function Navbar() {
         backgroundColor: scrolled ? 'var(--nav-bg)' : 'transparent',
         borderBottomColor: scrolled ? 'var(--nav-border)' : 'transparent',
       }}
-      className={`fixed top-0 left-0 right-0 z-50 h-[70px] transition-all duration-300 ${
-        scrolled ? 'backdrop-blur-2xl border-b shadow-sm' : ''
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 h-[70px] transition-all duration-300 ${scrolled ? 'backdrop-blur-2xl border-b shadow-sm' : ''
+        }`}
     >
-      <div className="max-w-6xl mx-auto h-full px-6 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto h-full px-6 lg:px-0 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
           <div className="w-10 h-10 rounded-[10px] bg-gradient-to-br from-brand to-brand-light flex items-center justify-center text-[15px] font-extrabold text-white font-mono transition-transform group-hover:scale-110 shadow-[0_4px_12px_rgba(234,88,12,0.4)]">

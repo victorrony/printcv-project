@@ -1,25 +1,7 @@
 import Link from 'next/link'
-import { getConfig, getStrapiImageUrl } from '@/lib/strapi'
-import { Printer3D } from '@/components/ui/Printer3D'
 import { HeroImageCanvas } from '@/components/ui/HeroImageCanvas'
 
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'
-
-export async function HeroSection() {
-  let imagemHero: string | null = null
-  let modelo3dUrl: string | null = null
-
-  try {
-    const config = await getConfig()
-    if (config.data?.modelo_3d?.url) {
-      const url = config.data.modelo_3d.url
-      modelo3dUrl = url.startsWith('http') ? url : `${STRAPI_URL}${url}`
-    } else if (config.data?.imagem_hero) {
-      imagemHero = getStrapiImageUrl(config.data.imagem_hero)
-    }
-  } catch {
-    // Strapi não conectado — usa fallback SVG
-  }
+export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-[80px] bg-page">
 
@@ -28,7 +10,7 @@ export async function HeroSection() {
       {/* Orb teal bottom-right */}
       <div className="absolute bottom-[-60px] right-[-60px] w-[400px] h-[400px] rounded-full bg-teal/[0.08] blur-[100px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center py-20">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-0 w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center py-20">
 
         {/* Lado esquerdo — texto */}
         <div>
@@ -88,18 +70,15 @@ export async function HeroSection() {
           </div>
         </div>
 
-        {/* Lado direito — modelo 3D, imagem ou SVG fallback */}
+        {/* Lado direito — mascote 3D (a foto aparece enquanto o modelo carrega) */}
         <div className="animate-fade-up [animation-delay:0.5s] opacity-0 flex items-center justify-center lg:justify-end">
           <div className="relative">
             <div className="absolute inset-[-30px] rounded-full border border-brand/20 animate-spin-slower" />
             <div className="absolute inset-[-60px] rounded-full border border-brand/10 animate-spin-slow" />
-            {modelo3dUrl ? (
-              <HeroImageCanvas modelUrl={modelo3dUrl} />
-            ) : imagemHero ? (
-              <HeroImageCanvas imageUrl={imagemHero} />
-            ) : (
-              <Printer3D />
-            )}
+            <HeroImageCanvas
+              modelUrl="/modelos/mascote.glb"
+              posterUrl="/produtos/mascote-tubarao-cabo-verdiano.png"
+            />
           </div>
         </div>
       </div>

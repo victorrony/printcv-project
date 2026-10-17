@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { SITE } from '@/lib/site'
 
 export function Footer() {
   return (
@@ -25,9 +26,9 @@ export function Footer() {
           <div className="font-mono text-[10px] tracking-[3px] text-brand uppercase mb-3">
             Contacto
           </div>
-          <p>📍 Praia, Santiago — Cabo Verde</p>
-          <p>📱 WhatsApp: +{process.env.NEXT_PUBLIC_WHATSAPP || '238XXXXXXX'}</p>
-          <p>📧 geral@printcv.cv</p>
+          <p>📍 {SITE.endereco}</p>
+          <p>📱 WhatsApp: +{SITE.whatsapp}</p>
+          <p>📧 {SITE.email}</p>
         </div>
 
         {/* Nav */}

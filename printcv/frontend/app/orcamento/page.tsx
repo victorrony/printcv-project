@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function OrcamentoPage() {
   return (
-    <section className="pt-[120px] pb-[80px] px-6">
+    <section className="pt-[120px] pb-[80px] px-6 md:px-0">
       <div className="max-w-[580px] mx-auto">
         <FadeSection>
           <p className="section-label">▸ Encomenda personalizada</p>
@@ -17,8 +17,8 @@ export default function OrcamentoPage() {
             A sua peça, à sua medida
           </h1>
           <p className="text-fg-muted text-[15px] leading-relaxed mb-12">
-            Descreva o que precisa. Respondemos em até 24 horas com estimativa de preço
-            e prazo de produção.
+            Descreva o que precisa e envie-nos pelo WhatsApp. Respondemos em até 24 horas
+            com estimativa de preço e prazo de produção.
           </p>
         </FadeSection>
 

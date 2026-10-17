@@ -1,0 +1,27 @@
+# Frontend
+printcv/frontend/node_modules/
+printcv/frontend/.next/
+printcv/frontend/.env.local
+printcv/frontend/.env*.local
+printcv/frontend/out/
+printcv/frontend/dist/
+
+# Backend
+printcv/backend/node_modules/
+printcv/backend/.env
+printcv/backend/dist/
+printcv/backend/build/
+printcv/backend/.tmp/
+printcv/backend/.strapi/
+printcv/backend/.strapi-updater.json
+printcv/backend/.strapi-cloud.json
+printcv/backend/public/uploads/*
+!printcv/backend/public/uploads/.gitkeep
+printcv/backend/exports/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

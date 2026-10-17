@@ -1,12 +1,12 @@
 'use client'
 
 import { MessageCircle } from 'lucide-react'
+import { linkWhatsApp } from '@/lib/site'
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP || '238XXXXXXX'
 const DEFAULT_MESSAGE = 'Olá! Gostaria de saber mais sobre os serviços da PrintCV.'
 
 export function WhatsAppButton() {
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(DEFAULT_MESSAGE)}`
+  const url = linkWhatsApp(DEFAULT_MESSAGE)
 
   return (
     <a

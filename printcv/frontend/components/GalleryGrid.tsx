@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { FadeSection } from '@/components/ui/FadeSection'
-import { getStrapiImageUrl } from '@/lib/strapi'
 import type { GaleriaItem } from '@/lib/types'
 
 interface GalleryGridProps {
@@ -13,11 +12,8 @@ export function GalleryGrid({ items }: GalleryGridProps) {
       <FadeSection>
         <div className="text-center py-20 rounded-2xl border-2 border-dashed border-theme">
           <p className="text-4xl mb-4">🎬</p>
-          <p className="text-fg-muted text-sm mb-2">
-            A galeria será preenchida quando a impressora chegar.
-          </p>
-          <p className="text-fg-subtle text-xs font-mono">
-            Estimativa: maio 2026
+          <p className="text-fg-muted text-sm">
+            Novos trabalhos em breve.
           </p>
         </div>
       </FadeSection>
@@ -27,7 +23,7 @@ export function GalleryGrid({ items }: GalleryGridProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {items.map((item, i) => {
-        const imageUrl = item.imagens?.[0] ? getStrapiImageUrl(item.imagens[0]) : null
+        const imageUrl = item.imagens[0] ?? null
 
         return (
           <FadeSection key={item.id} delay={i * 0.1}>

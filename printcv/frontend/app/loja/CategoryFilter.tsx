@@ -41,7 +41,7 @@ export function CategoryFilter({ categorias, activeSlug }: CategoryFilterProps) 
               : 'border-theme bg-elevated text-fg-muted hover:border-brand/40 hover:text-brand'
           }`}
         >
-          {cat.icone} {cat.nome}
+          {cat.icone ? `${cat.icone} ${cat.nome}` : cat.nome}
         </button>
       ))}
     </div>

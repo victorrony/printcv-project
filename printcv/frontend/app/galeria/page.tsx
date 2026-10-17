@@ -1,4 +1,4 @@
-import { getGaleria } from '@/lib/strapi'
+import { getGaleria } from '@/lib/conteudo'
 import { FadeSection } from '@/components/ui/FadeSection'
 import { GalleryGrid } from '@/components/GalleryGrid'
 import type { Metadata } from 'next'
@@ -8,18 +8,11 @@ export const metadata: Metadata = {
   description: 'Portfolio de peças impressas em 3D pela PrintCV em Cabo Verde.',
 }
 
-export default async function GaleriaPage() {
-  let items: any[] = []
-
-  try {
-    const res = await getGaleria()
-    items = res.data || []
-  } catch {
-    // Strapi not connected
-  }
+export default function GaleriaPage() {
+  const items = getGaleria()
 
   return (
-    <section className="pt-[120px] pb-[80px] px-6 max-w-6xl mx-auto">
+    <section className="pt-[120px] pb-[80px] px-6 md:px-0 max-w-6xl mx-auto">
       <FadeSection>
         <p className="section-label">▸ Making of</p>
         <h1 className="section-title">Galeria</h1>

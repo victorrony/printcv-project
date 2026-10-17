@@ -57,6 +57,12 @@
     },
     "cor_desejado": {
       "type": "string"
+    },
+    "ficheiro_3mf": {
+      "type": "string"
+    },
+    "dados_slice": {
+      "type": "json"
     }
   }
 }

@@ -1,16 +1,14 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Produto } from '@/lib/types'
-import { getStrapiImageUrl, formatPreco } from '@/lib/strapi'
+import { formatPreco } from '@/lib/format'
 
 interface ProductCardProps {
   produto: Produto
 }
 
 export function ProductCard({ produto }: ProductCardProps) {
-  const imageUrl = produto.imagens?.[0]
-    ? getStrapiImageUrl(produto.imagens[0])
-    : null
+  const imageUrl = produto.imagens[0] ?? null
 
   return (
     <Link href={`/loja/${produto.slug}`}>

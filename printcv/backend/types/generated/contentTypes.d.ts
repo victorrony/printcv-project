@@ -490,8 +490,10 @@ export interface ApiOrcamentoOrcamento extends Struct.CollectionTypeSchema {
     cor_desejado: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+    dados_slice: Schema.Attribute.JSON;
     descricao_peca: Schema.Attribute.RichText & Schema.Attribute.Required;
     email: Schema.Attribute.Email & Schema.Attribute.Required;
+    ficheiro_3mf: Schema.Attribute.String;
     imagem_referencia: Schema.Attribute.Media<"images">;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<"oneToMany", "api::orcamento.orcamento"> &

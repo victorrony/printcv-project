@@ -1,47 +1,33 @@
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getProdutoBySlug, getProdutosSlugs, getStrapiImageUrl, formatPreco } from '@/lib/strapi'
+import { getProdutos, getProdutoBySlug } from '@/lib/conteudo'
+import { formatPreco } from '@/lib/format'
+import { linkWhatsApp } from '@/lib/site'
 import { FadeSection } from '@/components/ui/FadeSection'
 import { ArrowLeft, Clock, Ruler, Package } from 'lucide-react'
 import type { Metadata } from 'next'
 
-export async function generateStaticParams() {
-  try {
-    const slugs = await getProdutosSlugs()
-    return slugs.map((slug) => ({ slug }))
-  } catch {
-    return []
+export const dynamicParams = false
+
+export function generateStaticParams() {
+  return getProdutos().map((p) => ({ slug: p.slug }))
+}
+
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+  const produto = getProdutoBySlug(params.slug)
+  if (!produto) return { title: 'Produto — PrintCV' }
+  return {
+    title: `${produto.nome} — PrintCV`,
+    description: produto.descricao.substring(0, 160),
   }
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  try {
-    const res = await getProdutoBySlug(params.slug)
-    const produto = res.data?.[0]
-    if (!produto) return { title: 'Produto — PrintCV' }
-    return {
-      title: `${produto.nome} — PrintCV`,
-      description: produto.descricao?.substring(0, 160),
-    }
-  } catch {
-    return { title: 'Produto — PrintCV' }
-  }
-}
-
-export default async function ProdutoPage({ params }: { params: { slug: string } }) {
-  let produto: any = null
-
-  try {
-    const res = await getProdutoBySlug(params.slug)
-    produto = res.data?.[0]
-  } catch {
-    notFound()
-  }
-
+export default function ProdutoPage({ params }: { params: { slug: string } }) {
+  const produto = getProdutoBySlug(params.slug)
   if (!produto) notFound()
 
-  const mainImage = produto.imagens?.[0] ? getStrapiImageUrl(produto.imagens[0]) : null
+  const mainImage = produto.imagens[0] ?? null
 
   return (
     <section className="pt-[100px] pb-[80px] px-6 max-w-5xl mx-auto">
@@ -74,15 +60,15 @@ export default async function ProdutoPage({ params }: { params: { slug: string }
           </div>
 
           {/* Thumbnail gallery */}
-          {produto.imagens?.length > 1 && (
+          {produto.imagens.length > 1 && (
             <div className="flex gap-3 mt-4">
-              {produto.imagens.slice(0, 4).map((img: any, i: number) => (
+              {produto.imagens.slice(0, 4).map((img, i) => (
                 <div
-                  key={i}
+                  key={`${i}-${img}`}
                   className="relative w-20 h-20 rounded-lg overflow-hidden border border-theme"
                 >
                   <Image
-                    src={getStrapiImageUrl(img)}
+                    src={img}
                     alt={`${produto.nome} - ${i + 1}`}
                     fill
                     className="object-cover"
@@ -141,9 +127,9 @@ export default async function ProdutoPage({ params }: { params: { slug: string }
 
           {/* CTA */}
           <a
-            href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP || '+2389519228'}?text=${encodeURIComponent(
+            href={linkWhatsApp(
               `Olá! Estou interessado no produto "${produto.nome}" (${produto.preco_sob_consulta ? 'preço a combinar' : formatPreco(produto.preco)}). Podem dar-me mais informações?`
-            )}`}
+            )}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary inline-flex items-center gap-2 w-full justify-center"

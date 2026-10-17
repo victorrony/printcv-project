@@ -8,11 +8,18 @@ Vende produtos impressos em 3D, aceita orçamentos personalizados e mostra timel
 
 | Camada | Tecnologia | Deploy |
 |--------|-----------|--------|
-| Frontend | Next.js 14 (App Router) + Tailwind CSS | Vercel |
-| Backend/CMS | **Strapi v5** (headless CMS) | Railway |
-| Base de dados | PostgreSQL (Railway managed) | Railway |
-| Media | Cloudinary (imagens + vídeos) | Cloudinary |
+| Frontend | Next.js 14 (App Router) + Tailwind CSS | Vercel (Root Directory `printcv/frontend`) |
+| Conteúdo | No código: `frontend/lib/conteudo.ts` + imagens em `frontend/public/` | — |
+| Contactos / WhatsApp | `frontend/lib/site.ts` | — |
 | Domínio | printcv.cv (ou printcv.com) | — |
+
+**Desde 2026-10-17 o frontend não usa o Strapi.** Produtos, categorias e galeria
+editam-se em `lib/conteudo.ts`; o formulário de orçamento abre o WhatsApp.
+A imagem opcional do pedido vai para o Vercel Blob (`app/api/upload`) e segue
+como link na mensagem — única variável de ambiente: `BLOB_READ_WRITE_TOKEN`
+(criada ao ligar um Blob store ao projecto na Vercel). O `/admin` e o cálculo automático (servidor de
+slice local na porta 3001) estão parados em `printcv/arquivo/orcamento-automatico/`.
+A pasta `printcv/backend/` (Strapi v5) está por apagar depois do deploy.
 
 ## Estrutura de Pastas
 
@@ -84,3 +91,5 @@ STRAPI_API_TOKEN=<gerado no painel Strapi>
 - Respostas sempre em **Português** (variedade europeia/africana)
 - O plano completo está em `printcv/printcv-project-plan.md`
 - Nunca alterar `node_modules/` ou ficheiros `dist/` gerados
+
+O acesso ao admin local do Strapi não se guarda aqui (o ficheiro vai para o git).

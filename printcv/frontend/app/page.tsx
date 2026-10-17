@@ -3,23 +3,12 @@ import { ProcessSection } from '@/components/sections/ProcessSection'
 import { FadeSection } from '@/components/ui/FadeSection'
 import { ProductCard } from '@/components/ProductCard'
 import { GalleryGrid } from '@/components/GalleryGrid'
-import { getProdutos, getGaleria } from '@/lib/strapi'
+import { getProdutos, getGaleria } from '@/lib/conteudo'
 import Link from 'next/link'
 
-export default async function HomePage() {
-  let produtos: any[] = []
-  let galeriaItems: any[] = []
-
-  try {
-    const [produtosRes, galeriaRes] = await Promise.all([
-      getProdutos({ destaque: true, disponivel: true }),
-      getGaleria({ destaque: true }),
-    ])
-    produtos = produtosRes.data || []
-    galeriaItems = galeriaRes.data || []
-  } catch {
-    // Strapi not connected yet
-  }
+export default function HomePage() {
+  const produtos = getProdutos({ destaque: true, disponivel: true })
+  const galeriaItems = getGaleria({ destaque: true })
 
   return (
     <>
@@ -50,11 +39,8 @@ export default async function HomePage() {
           <FadeSection>
             <div className="text-center py-20 rounded-2xl border-2 border-dashed border-theme">
               <div className="text-4xl mb-4">📦</div>
-              <p className="text-fg-muted text-sm mb-2">
-                Os produtos aparecerão aqui quando adicionados no Strapi
-              </p>
-              <p className="text-fg-subtle text-xs font-mono">
-                Strapi Admin → Produtos → Novo Produto → destaque: ✅
+              <p className="text-fg-muted text-sm">
+                Novos produtos em breve.
               </p>
             </div>
           </FadeSection>

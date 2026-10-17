@@ -18,7 +18,10 @@ export function FadeSection({ children, delay = 0, className = '' }: FadeSection
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setVisible(true)
+        if (entry.isIntersecting) {
+          setVisible(true)
+          observer.disconnect() // a animação só corre uma vez
+        }
       },
       { threshold: 0.15 }
     )

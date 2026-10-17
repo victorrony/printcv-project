@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function SobrePage() {
   return (
-    <section className="pt-[120px] pb-[80px] px-6 max-w-3xl mx-auto">
+    <section className="pt-[120px] pb-[80px] px-6 md:px-0 max-w-3xl mx-auto">
       <FadeSection>
         <p className="section-label">▸ Quem somos</p>
         <h1 className="section-title">Sobre a PrintCV</h1>
@@ -29,7 +29,7 @@ export default function SobrePage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {[
               { label: 'Tecnologia', value: 'Bambu Lab', desc: 'Impressora profissional com câmara integrada' },
-              { label: 'Materiais', value: 'PLA · PETG · TPU', desc: 'Materiais duráveis para cada necessidade' },
+              { label: 'Materiais', value: 'PLA', desc: 'Materiais duráveis para cada necessidade' },
               { label: 'Localização', value: 'Praia, CV', desc: 'Produção local, entrega rápida no arquipélago' },
             ].map((item, i) => (
               <div key={i} className="info-card">

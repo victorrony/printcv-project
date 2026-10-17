@@ -1,4 +1,4 @@
-import { getProdutos, getCategorias } from '@/lib/strapi'
+import { getProdutos, getCategorias } from '@/lib/conteudo'
 import { ProductCard } from '@/components/ProductCard'
 import { FadeSection } from '@/components/ui/FadeSection'
 import { CategoryFilter } from './CategoryFilter'
@@ -9,27 +9,21 @@ export const metadata: Metadata = {
   description: 'Peças impressas em 3D disponíveis para compra em Cabo Verde.',
 }
 
-export default async function LojaPage({
+export default function LojaPage({
   searchParams,
 }: {
-  searchParams: { categoria?: string }
+  searchParams: { categoria?: string | string[] }
 }) {
-  let produtos: any[] = []
-  let categorias: any[] = []
-
-  try {
-    const [produtosRes, categoriasRes] = await Promise.all([
-      getProdutos(searchParams.categoria ? { categoria: searchParams.categoria } : undefined),
-      getCategorias(),
-    ])
-    produtos = produtosRes.data || []
-    categorias = categoriasRes.data || []
-  } catch {
-    // Strapi not connected
-  }
+  // ?categoria= vazio ou repetido conta como "Todos"
+  const categoria =
+    typeof searchParams.categoria === 'string' && searchParams.categoria
+      ? searchParams.categoria
+      : undefined
+  const produtos = getProdutos({ categoria })
+  const categorias = getCategorias()
 
   return (
-    <section className="pt-[120px] pb-[80px] px-6 max-w-6xl mx-auto">
+    <section className="pt-[120px] pb-[80px] px-6 md:px-0 max-w-6xl mx-auto">
       <FadeSection>
         <p className="section-label">▸ Catálogo</p>
         <h1 className="section-title">Produtos</h1>
@@ -38,7 +32,7 @@ export default async function LojaPage({
       <FadeSection delay={0.1}>
         <CategoryFilter
           categorias={categorias}
-          activeSlug={searchParams.categoria}
+          activeSlug={categoria}
         />
       </FadeSection>
 
@@ -55,9 +49,9 @@ export default async function LojaPage({
           <div className="text-center py-20 rounded-2xl border-2 border-dashed border-theme mt-8">
             <p className="text-4xl mb-4">📦</p>
             <p className="text-fg-muted text-sm">
-              {searchParams.categoria
+              {categoria
                 ? 'Nenhum produto nesta categoria ainda.'
-                : 'Os produtos aparecerão aqui quando adicionados no Strapi.'}
+                : 'Novos produtos em breve.'}
             </p>
           </div>
         </FadeSection>

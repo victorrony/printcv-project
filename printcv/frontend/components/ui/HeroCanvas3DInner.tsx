@@ -5,15 +5,33 @@ import { useTexture, useGLTF, OrbitControls, Preload } from '@react-three/drei'
 import { Suspense, useRef } from 'react'
 import * as THREE from 'three'
 
+// Só monta depois de o Suspense resolver (recurso carregado) e avisa no
+// primeiro frame, já com os shaders compilados e algo desenhado
+function AoCarregar({ onLoaded }: { onLoaded?: () => void }) {
+  const avisado = useRef(false)
+  useFrame(() => {
+    if (avisado.current) return
+    avisado.current = true
+    onLoaded?.()
+  })
+  return null
+}
+
+// Flutuação vertical com tempo próprio: o clock do R3F volta a zero quando o
+// frameloop é retomado, o que faria o modelo saltar ao regressar ao ecrã
+function useFlutuar(ref: React.RefObject<THREE.Object3D>) {
+  const t = useRef(0)
+  useFrame((_, delta) => {
+    t.current += Math.min(delta, 0.1)
+    if (ref.current) ref.current.position.y = Math.sin(t.current * 0.6) * 0.08
+  })
+}
+
 function ImagePlane({ imageUrl }: { imageUrl: string }) {
   const texture = useTexture(imageUrl)
   const meshRef = useRef<THREE.Mesh>(null)
 
-  useFrame(({ clock }) => {
-    if (meshRef.current) {
-      meshRef.current.position.y = Math.sin(clock.getElapsedTime() * 0.6) * 0.08
-    }
-  })
+  useFlutuar(meshRef)
 
   return (
     <mesh ref={meshRef}>
@@ -27,11 +45,7 @@ function GLBModel({ modelUrl }: { modelUrl: string }) {
   const { scene } = useGLTF(modelUrl)
   const ref = useRef<THREE.Group>(null)
 
-  useFrame(({ clock }) => {
-    if (ref.current) {
-      ref.current.position.y = Math.sin(clock.getElapsedTime() * 0.6) * 0.08
-    }
-  })
+  useFlutuar(ref)
 
   return (
     <primitive
@@ -46,15 +60,18 @@ function GLBModel({ modelUrl }: { modelUrl: string }) {
 interface Props {
   imageUrl?: string
   modelUrl?: string
+  onLoaded?: () => void
+  /** false com o hero fora do ecrã: pára de desenhar e poupa GPU/bateria */
+  ativo?: boolean
 }
 
-export function HeroCanvas3DInner({ imageUrl, modelUrl }: Props) {
+export function HeroCanvas3DInner({ imageUrl, modelUrl, onLoaded, ativo = true }: Props) {
   return (
     <Canvas
-      frameloop="always"
+      frameloop={ativo ? 'always' : 'never'}
       dpr={[1, 2]}
       camera={{ position: [0, 0, 3.5], fov: 40 }}
-      gl={{ preserveDrawingBuffer: true, alpha: true }}
+      gl={{ alpha: true }}
       style={{ background: 'transparent' }}
     >
       <Suspense fallback={null}>
@@ -67,6 +84,7 @@ export function HeroCanvas3DInner({ imageUrl, modelUrl }: Props) {
         ) : imageUrl ? (
           <ImagePlane imageUrl={imageUrl} />
         ) : null}
+        <AoCarregar onLoaded={onLoaded} />
 
         <OrbitControls
           autoRotate
