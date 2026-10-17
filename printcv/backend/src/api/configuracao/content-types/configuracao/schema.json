@@ -1,0 +1,21 @@
+{
+  "kind": "singleType",
+  "collectionName": "configuracoes",
+  "info": {
+    "singularName": "configuracao",
+    "pluralName": "configuracoes",
+    "displayName": "Configuração do Site"
+  },
+  "options": { "draftAndPublish": false },
+  "attributes": {
+    "titulo_site": { "type": "string", "default": "PrintCV" },
+    "descricao_seo": { "type": "text" },
+    "whatsapp": { "type": "string" },
+    "email": { "type": "email" },
+    "instagram": { "type": "string" },
+    "endereco": { "type": "string" },
+    "horario": { "type": "string" },
+    "imagem_hero": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "modelo_3d": { "type": "media", "multiple": false, "allowedTypes": ["files"] }
+  }
+}

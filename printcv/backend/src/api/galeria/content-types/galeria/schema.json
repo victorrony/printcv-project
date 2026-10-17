@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "galerias",
+  "info": {
+    "singularName": "galeria",
+    "pluralName": "galerias",
+    "displayName": "Galeria"
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "titulo": { "type": "string", "required": true },
+    "descricao": { "type": "text" },
+    "imagens": { "type": "media", "multiple": true, "allowedTypes": ["images"] },
+    "video_timelapse": { "type": "media", "multiple": false, "allowedTypes": ["videos"] },
+    "tempo_impressao": { "type": "string" },
+    "material": { "type": "enumeration", "enum": ["PLA", "PETG", "TPU"] },
+    "data": { "type": "date" },
+    "destaque": { "type": "boolean", "default": false }
+  }
+}

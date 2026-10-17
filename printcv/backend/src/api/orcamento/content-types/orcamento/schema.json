@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orcamentos",
+  "info": {
+    "singularName": "orcamento",
+    "pluralName": "orcamentos",
+    "displayName": "Orçamento"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nome_cliente": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "telefone": {
+      "type": "string",
+      "required": true
+    },
+    "descricao_peca": {
+      "type": "richtext",
+      "required": true
+    },
+    "imagem_referencia": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "status": {
+      "type": "enumeration",
+      "default": "novo",
+      "enum": [
+        "novo",
+        "em_analise",
+        "orcado",
+        "aceite",
+        "em_producao",
+        "concluido"
+      ]
+    },
+    "preco_estimado": {
+      "type": "decimal"
+    },
+    "notas_internas": {
+      "type": "richtext"
+    },
+    "praco_desejado": {
+      "type": "string"
+    },
+    "cor_desejado": {
+      "type": "string"
+    }
+  }
+}
