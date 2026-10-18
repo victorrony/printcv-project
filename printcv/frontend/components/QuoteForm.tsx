@@ -176,7 +176,7 @@ export function QuoteForm() {
             {previewFalhou ? (
               // HEIC e afins não têm pré-visualização na maioria dos browsers
               <div className="flex items-center gap-3 p-4 text-sm text-fg-muted">
-                <ImageIcon size={20} className="text-brand shrink-0" />
+                <ImageIcon size={20} className="text-accent shrink-0" />
                 <span className="truncate pr-10">{selectedFile?.name}</span>
               </div>
             ) : (

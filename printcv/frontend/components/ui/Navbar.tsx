@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ShoppingCart, Menu, X } from 'lucide-react'
+import { usePathname } from 'next/navigation'
+import { Menu, X } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 
 const NAV_ITEMS = [
@@ -16,6 +17,9 @@ const NAV_ITEMS = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const pathname = usePathname()
+  // '/loja/x' também marca 'Loja'; '/#processo' nunca fica activo
+  const ativo = (href: string) => !href.includes('#') && (pathname === href || pathname.startsWith(href + '/'))
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)
@@ -39,7 +43,7 @@ export function Navbar() {
             3D
           </div>
           <span className="font-mono font-bold text-lg tracking-tight text-fg">
-            PRINT<span className="text-brand">CV</span>
+            PRINT<span className="text-accent">CV</span>
           </span>
         </Link>
 
@@ -49,7 +53,10 @@ export function Navbar() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-xs font-semibold tracking-[2px] uppercase text-fg-muted hover:text-brand transition-colors"
+              aria-current={ativo(item.href) ? 'page' : undefined}
+              className={`text-xs font-semibold tracking-[2px] uppercase transition-colors hover:text-accent ${
+                ativo(item.href) ? 'text-accent' : 'text-fg-muted'
+              }`}
             >
               {item.label}
             </Link>
@@ -60,13 +67,13 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <ThemeToggle />
 
-          <Link href="/loja" className="relative">
-            <ShoppingCart size={22} className="text-fg-muted hover:text-brand transition-colors" />
-          </Link>
-
           <button
+            type="button"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-fg-muted"
+            aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+            aria-expanded={menuOpen}
+            aria-controls="menu-movel"
+            className="md:hidden -mr-2.5 p-2.5 text-fg-muted"
           >
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -76,6 +83,7 @@ export function Navbar() {
       {/* Mobile menu */}
       {menuOpen && (
         <div
+          id="menu-movel"
           style={{ backgroundColor: 'var(--nav-bg)', borderBottomColor: 'var(--nav-border)' }}
           className="absolute top-[70px] left-0 right-0 backdrop-blur-2xl border-b px-6 py-4 md:hidden shadow-lg"
         >
@@ -85,7 +93,10 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className="block py-3 text-sm font-semibold tracking-wide text-fg-muted hover:text-brand transition-colors border-b border-theme last:border-0"
+                aria-current={ativo(item.href) ? 'page' : undefined}
+                className={`block py-3 text-sm font-semibold tracking-wide hover:text-accent transition-colors border-b border-theme last:border-0 ${
+                  ativo(item.href) ? 'text-accent' : 'text-fg-muted'
+                }`}
               >
                 {item.label}
               </Link>

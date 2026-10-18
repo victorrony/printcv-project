@@ -26,6 +26,30 @@ class SemFalhas extends Component<{ children: ReactNode }, { falhou: boolean }> 
   }
 }
 
+type NavegadorExtra = Navigator & {
+  deviceMemory?: number
+  connection?: { saveData?: boolean }
+}
+
+// O 3D custa ~600 kB de JS, 1 MB de modelo e GPU contínua: só onde compensa.
+// No resto (telemóvel, aparelho fraco, poupança de dados, menos movimento) fica a foto.
+function useAparelhoCapaz() {
+  const [capaz, setCapaz] = useState(false)
+
+  useEffect(() => {
+    const nav = navigator as NavegadorExtra
+    const hardware =
+      (nav.hardwareConcurrency ?? 8) >= 4 && (nav.deviceMemory ?? 8) >= 4 && !nav.connection?.saveData
+    const mq = window.matchMedia('(min-width: 768px) and (prefers-reduced-motion: no-preference)')
+    const avaliar = () => setCapaz(hardware && mq.matches)
+    avaliar()
+    mq.addEventListener('change', avaliar)
+    return () => mq.removeEventListener('change', avaliar)
+  }, [])
+
+  return capaz
+}
+
 interface HeroImageCanvasProps {
   imageUrl?: string
   modelUrl?: string
@@ -37,6 +61,12 @@ export function HeroImageCanvas({ imageUrl, modelUrl, posterUrl }: HeroImageCanv
   const [carregado, setCarregado] = useState(false)
   const [visivel, setVisivel] = useState(true)
   const ref = useRef<HTMLDivElement>(null)
+  const usar3d = useAparelhoCapaz() && Boolean(modelUrl || imageUrl)
+
+  // O canvas desmonta quando usar3d passa a false: ao voltar, recomeça do zero
+  useEffect(() => {
+    if (!usar3d) setCarregado(false)
+  }, [usar3d])
 
   useEffect(() => {
     const el = ref.current
@@ -55,14 +85,16 @@ export function HeroImageCanvas({ imageUrl, modelUrl, posterUrl }: HeroImageCanv
       className="relative w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] lg:w-[720px] lg:h-[720px]"
     >
       {modelUrl && (
-        // Descarrega o modelo em paralelo com o JS do 3D (senão só começa quando
-        // o useGLTF monta); prioridade baixa para não atrasar a foto do hero
+        // Vai no HTML do servidor: o modelo descarrega em paralelo com o JS do 3D.
+        // O media replica a parte de useAparelhoCapaz que o browser sabe avaliar,
+        // para o telemóvel não o descarregar; prioridade baixa para não atrasar a foto
         <link
           rel="preload"
           href={modelUrl}
           as="fetch"
           crossOrigin="anonymous"
           fetchPriority="low"
+          media="(min-width: 768px) and (prefers-reduced-motion: no-preference)"
         />
       )}
       {posterUrl && (
@@ -70,7 +102,7 @@ export function HeroImageCanvas({ imageUrl, modelUrl, posterUrl }: HeroImageCanv
         // para uma cor quase igual e não se vê o rectângulo
         <div
           className={`absolute inset-[10%] rounded-full overflow-hidden bg-[#e1e1dd] transition-opacity duration-700 ${
-            carregado ? 'opacity-0' : 'opacity-100'
+            usar3d && carregado ? 'opacity-0' : 'opacity-100'
           }`}
         >
           <Image
@@ -83,7 +115,7 @@ export function HeroImageCanvas({ imageUrl, modelUrl, posterUrl }: HeroImageCanv
           />
         </div>
       )}
-      {(modelUrl || imageUrl) && (
+      {usar3d && (
         <div
           className={`absolute inset-0 transition-opacity duration-700 ${
             carregado ? 'opacity-100' : 'opacity-0'

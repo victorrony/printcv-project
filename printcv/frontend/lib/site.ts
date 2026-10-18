@@ -3,6 +3,7 @@ export const SITE = {
   whatsapp: '2389519228',
   email: 'geral@printcv.cv',
   endereco: 'Praia, Santiago — Cabo Verde',
+  mensagemWhatsApp: 'Olá! Gostaria de saber mais sobre os serviços da PrintCV.',
 }
 
 export function linkWhatsApp(mensagem: string): string {

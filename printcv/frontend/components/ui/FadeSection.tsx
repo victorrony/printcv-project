@@ -15,6 +15,11 @@ export function FadeSection({ children, delay = 0, className = '' }: FadeSection
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    // Com "reduzir movimento", o conteúdo aparece logo, sem esperar pelo scroll
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setVisible(true)
+      return
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {

@@ -1,17 +1,20 @@
 import Image from 'next/image'
+import { Clapperboard, Clock, Play } from 'lucide-react'
 import { FadeSection } from '@/components/ui/FadeSection'
 import type { GaleriaItem } from '@/lib/types'
 
 interface GalleryGridProps {
   items: GaleriaItem[]
+  /** h2 quando a grelha vem logo a seguir ao h1 da página */
+  nivelTitulo?: 'h2' | 'h3'
 }
 
-export function GalleryGrid({ items }: GalleryGridProps) {
+export function GalleryGrid({ items, nivelTitulo: Titulo = 'h3' }: GalleryGridProps) {
   if (items.length === 0) {
     return (
       <FadeSection>
         <div className="text-center py-20 rounded-2xl border-2 border-dashed border-theme">
-          <p className="text-4xl mb-4">🎬</p>
+          <Clapperboard size={36} strokeWidth={1.5} className="mx-auto mb-4 text-accent" aria-hidden="true" />
           <p className="text-fg-muted text-sm">
             Novos trabalhos em breve.
           </p>
@@ -39,26 +42,27 @@ export function GalleryGrid({ items }: GalleryGridProps) {
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full bg-brand/20 border-2 border-brand/40 flex items-center justify-center text-xl">
-                      ▶
+                    <div className="w-14 h-14 rounded-full bg-brand/20 border-2 border-brand/40 flex items-center justify-center text-accent">
+                      <Play size={22} fill="currentColor" aria-hidden="true" />
                     </div>
                   </div>
                 )}
 
                 {item.tempo_impressao && (
-                  <span className="absolute bottom-3 right-3 font-mono text-[11px] text-brand bg-surface/80 backdrop-blur-sm px-2 py-1 rounded-md">
-                    ⏱ {item.tempo_impressao}
+                  <span className="absolute bottom-3 right-3 font-mono text-[11px] text-accent bg-surface/80 backdrop-blur-sm px-2 py-1 rounded-md">
+                    <Clock size={11} className="inline -mt-0.5 mr-1" aria-hidden="true" />
+                    <span className="sr-only">Tempo de impressão:</span> {item.tempo_impressao}
                   </span>
                 )}
               </div>
 
               <div className="p-5">
                 {item.material && (
-                  <span className="font-mono text-[10px] tracking-[2px] text-brand uppercase">
+                  <span className="font-mono text-[10px] tracking-[2px] text-accent uppercase">
                     {item.material}
                   </span>
                 )}
-                <h3 className="text-base font-bold mt-1 text-fg">{item.titulo}</h3>
+                <Titulo className="text-base font-bold mt-1 text-fg">{item.titulo}</Titulo>
                 {item.descricao && (
                   <p className="text-xs text-fg-muted mt-2 line-clamp-2">{item.descricao}</p>
                 )}

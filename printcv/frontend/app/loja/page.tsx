@@ -2,6 +2,7 @@ import { getProdutos, getCategorias } from '@/lib/conteudo'
 import { ProductCard } from '@/components/ProductCard'
 import { FadeSection } from '@/components/ui/FadeSection'
 import { CategoryFilter } from './CategoryFilter'
+import { Package } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -40,14 +41,14 @@ export default function LojaPage({
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {produtos.map((produto, i) => (
             <FadeSection key={produto.id} delay={i * 0.08}>
-              <ProductCard produto={produto} />
+              <ProductCard produto={produto} nivelTitulo="h2" />
             </FadeSection>
           ))}
         </div>
       ) : (
         <FadeSection>
           <div className="text-center py-20 rounded-2xl border-2 border-dashed border-theme mt-8">
-            <p className="text-4xl mb-4">📦</p>
+            <Package size={36} strokeWidth={1.5} className="mx-auto mb-4 text-accent" aria-hidden="true" />
             <p className="text-fg-muted text-sm">
               {categoria
                 ? 'Nenhum produto nesta categoria ainda.'

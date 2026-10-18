@@ -25,8 +25,8 @@ export function CategoryFilter({ categorias, activeSlug }: CategoryFilterProps) 
         onClick={() => handleFilter()}
         className={`px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide transition-all border ${
           !activeSlug
-            ? 'border-brand bg-brand/[0.12] text-brand'
-            : 'border-theme bg-elevated text-fg-muted hover:border-brand/40 hover:text-brand'
+            ? 'border-brand bg-brand/[0.12] text-accent'
+            : 'border-theme bg-elevated text-fg-muted hover:border-brand/40 hover:text-accent'
         }`}
       >
         Todos
@@ -37,8 +37,8 @@ export function CategoryFilter({ categorias, activeSlug }: CategoryFilterProps) 
           onClick={() => handleFilter(cat.slug)}
           className={`px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide transition-all border ${
             activeSlug === cat.slug
-              ? 'border-brand bg-brand/[0.12] text-brand'
-              : 'border-theme bg-elevated text-fg-muted hover:border-brand/40 hover:text-brand'
+              ? 'border-brand bg-brand/[0.12] text-accent'
+              : 'border-theme bg-elevated text-fg-muted hover:border-brand/40 hover:text-accent'
           }`}
         >
           {cat.icone ? `${cat.icone} ${cat.nome}` : cat.nome}

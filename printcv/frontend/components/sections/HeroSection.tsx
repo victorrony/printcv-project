@@ -13,11 +13,13 @@ export function HeroSection() {
       <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-0 w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center py-20">
 
         {/* Lado esquerdo — texto */}
+
         <div>
           {/* Badge */}
           <div className="animate-fade-up [animation-delay:0.1s] opacity-0 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand/10 border border-brand/30 mb-8">
             <span className="w-2 h-2 rounded-full bg-brand animate-pulse-glow" />
-            <span className="font-mono text-[11px] tracking-[4px] text-brand uppercase">
+            {/* Mais escuro no tema claro: o fundo aqui é o brilho laranja do hero */}
+            <span className="font-mono text-[11px] tracking-[4px] text-brand-800 dark:text-accent uppercase">
               Impressão 3D em Cabo Verde
             </span>
           </div>
@@ -41,7 +43,7 @@ export function HeroSection() {
           {/* Subtítulo */}
           <p className="animate-fade-up [animation-delay:0.6s] opacity-0 text-[17px] text-fg-muted max-w-[480px] leading-relaxed mb-10 font-body">
             Criamos peças únicas com precisão milimétrica usando tecnologia
-            <span className="text-brand font-semibold"> Bambu Lab</span>.
+            <span className="text-accent font-semibold"> Bambu Lab</span>.
             Protótipos, arte, acessórios — camada por camada, na ilha de Santiago.
           </p>
 
@@ -63,7 +65,7 @@ export function HeroSection() {
               { value: '100%', label: 'Local' },
             ].map((stat) => (
               <div key={stat.label}>
-                <div className="font-display font-bold text-2xl text-brand">{stat.value}</div>
+                <div className="font-display font-bold text-2xl text-accent">{stat.value}</div>
                 <div className="text-xs text-fg-subtle font-mono uppercase tracking-widest mt-1">{stat.label}</div>
               </div>
             ))}

@@ -13,6 +13,7 @@ const config: Config = {
           DEFAULT: '#EA580C',
           light: '#F97316',
           dark: '#C2410C',
+          800: '#9A3412',
           50: '#FFF7ED',
           100: '#FFEDD5',
           500: '#EA580C',
@@ -29,6 +30,8 @@ const config: Config = {
         surface: '#FFFFFF',
         elevated: '#F5F4F0',
         /* Tokens semânticos via variáveis CSS — adaptam-se ao tema */
+        /* Texto laranja com contraste AA em ambos os temas (o brand fica para fundos) */
+        accent: 'var(--accent-text)',
         fg: {
           DEFAULT: 'var(--fg)',
           muted:   'var(--fg-muted)',
@@ -52,9 +55,10 @@ const config: Config = {
         subtle: 'var(--border-subtle)',
       },
       fontFamily: {
-        display: ['Space Grotesk', 'sans-serif'],
-        body: ['DM Sans', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        /* Variáveis definidas pelo next/font em app/layout.tsx */
+        display: ['var(--font-display)', 'sans-serif'],
+        body: ['var(--font-body)', 'sans-serif'],
+        mono: ['var(--font-mono)', 'monospace'],
       },
       animation: {
         'fade-up':    'fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards',

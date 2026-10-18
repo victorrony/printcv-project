@@ -34,7 +34,7 @@ export default function ProdutoPage({ params }: { params: { slug: string } }) {
       <FadeSection>
         <Link
           href="/loja"
-          className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-brand transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-accent transition-colors mb-8"
         >
           <ArrowLeft size={16} /> Voltar à loja
         </Link>
@@ -53,8 +53,8 @@ export default function ProdutoPage({ params }: { params: { slug: string } }) {
                 priority
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-7xl opacity-20">
-                📦
+              <div className="w-full h-full flex items-center justify-center text-accent opacity-30">
+                <Package size={96} strokeWidth={1.25} aria-hidden="true" />
               </div>
             )}
           </div>
@@ -82,7 +82,7 @@ export default function ProdutoPage({ params }: { params: { slug: string } }) {
         {/* Details */}
         <FadeSection delay={0.2}>
           {produto.categoria && (
-            <span className="inline-block font-mono text-[10px] tracking-[2px] text-brand bg-brand/10 px-3 py-1 rounded-md uppercase mb-4">
+            <span className="inline-block font-mono text-[10px] tracking-[2px] text-accent bg-brand/10 px-3 py-1 rounded-md uppercase mb-4">
               {produto.categoria.nome}
             </span>
           )}
@@ -104,21 +104,21 @@ export default function ProdutoPage({ params }: { params: { slug: string } }) {
           <div className="flex flex-col gap-3 mb-8 p-5 rounded-xl bg-elevated border border-theme">
             {produto.material && (
               <div className="flex items-center gap-3 text-sm">
-                <Package size={16} className="text-brand" />
+                <Package size={16} className="text-accent" />
                 <span className="text-fg-muted">Material:</span>
                 <span className="font-semibold text-fg">{produto.material}</span>
               </div>
             )}
             {produto.dimensoes && (
               <div className="flex items-center gap-3 text-sm">
-                <Ruler size={16} className="text-brand" />
+                <Ruler size={16} className="text-accent" />
                 <span className="text-fg-muted">Dimensões:</span>
                 <span className="font-semibold text-fg">{produto.dimensoes}</span>
               </div>
             )}
             {produto.tempo_producao && (
               <div className="flex items-center gap-3 text-sm">
-                <Clock size={16} className="text-brand" />
+                <Clock size={16} className="text-accent" />
                 <span className="text-fg-muted">Tempo de produção:</span>
                 <span className="font-semibold text-fg">{produto.tempo_producao}</span>
               </div>

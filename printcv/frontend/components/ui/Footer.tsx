@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { SITE } from '@/lib/site'
+import { Mail, MapPin, MessageCircle } from 'lucide-react'
+import { SITE, linkWhatsApp } from '@/lib/site'
 
 export function Footer() {
   return (
@@ -12,7 +13,7 @@ export function Footer() {
               3D
             </div>
             <span className="font-mono font-bold text-base text-fg">
-              PRINT<span className="text-brand">CV</span>
+              PRINT<span className="text-accent">CV</span>
             </span>
           </div>
           <p className="text-sm text-fg-muted leading-relaxed max-w-[280px]">
@@ -23,24 +24,38 @@ export function Footer() {
 
         {/* Contacto */}
         <div className="text-sm text-fg-muted leading-[2.2]">
-          <div className="font-mono text-[10px] tracking-[3px] text-brand uppercase mb-3">
+          <div className="font-mono text-[10px] tracking-[3px] text-accent uppercase mb-3">
             Contacto
           </div>
-          <p>📍 {SITE.endereco}</p>
-          <p>📱 WhatsApp: +{SITE.whatsapp}</p>
-          <p>📧 {SITE.email}</p>
+          <p className="flex items-center gap-2">
+            <MapPin size={15} className="text-accent shrink-0" aria-hidden="true" />
+            {SITE.endereco}
+          </p>
+          <a
+            href={linkWhatsApp(SITE.mensagemWhatsApp)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 hover:text-accent transition-colors"
+          >
+            <MessageCircle size={15} className="text-accent shrink-0" aria-hidden="true" />
+            WhatsApp +{SITE.whatsapp}
+          </a>
+          <a href={`mailto:${SITE.email}`} className="flex items-center gap-2 hover:text-accent transition-colors">
+            <Mail size={15} className="text-accent shrink-0" aria-hidden="true" />
+            {SITE.email}
+          </a>
         </div>
 
         {/* Nav */}
         <div className="text-sm text-fg-muted leading-[2.2]">
-          <div className="font-mono text-[10px] tracking-[3px] text-brand uppercase mb-3">
+          <div className="font-mono text-[10px] tracking-[3px] text-accent uppercase mb-3">
             Navegação
           </div>
           {['Loja', 'Galeria', 'Orçamento', 'Sobre'].map((label) => (
             <Link
               key={label}
               href={`/${label.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')}`}
-              className="block hover:text-brand transition-colors"
+              className="block hover:text-accent transition-colors"
             >
               {label}
             </Link>

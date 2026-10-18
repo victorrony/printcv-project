@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;700&display=swap');
-
 /* ── Variáveis de tema ── */
 :root {
   --bg-page:       #FAFAF8;
@@ -14,7 +12,8 @@
   --border-subtle: #EFEDE8;
   --fg:            #1C1917;
   --fg-muted:      #57534E;
-  --fg-subtle:     #A8A29E;
+  --fg-subtle:     #736D68;
+  --accent-text:   #B93B0A;
   --shadow-card:   0 2px 12px rgba(0,0,0,0.06);
   --shadow-hover:  0 16px 48px rgba(234,88,12,0.18);
   --nav-bg:        rgba(250,250,248,0.92);
@@ -31,7 +30,8 @@
   --border-subtle: rgba(255,255,255,0.05);
   --fg:            #FAF9F7;
   --fg-muted:      #A8A29E;
-  --fg-subtle:     #78716C;
+  --fg-subtle:     #9A948F;
+  --accent-text:   #F97316;
   --shadow-card:   0 2px 12px rgba(0,0,0,0.3);
   --shadow-hover:  0 16px 48px rgba(234,88,12,0.25);
   --nav-bg:        rgba(12,10,9,0.92);
@@ -48,6 +48,12 @@
     background-color: var(--bg-page);
     color: var(--fg);
     @apply font-body antialiased;
+  }
+
+  /* Anel de foco só para teclado (o rato não o mostra) */
+  :focus-visible {
+    outline: 2px solid var(--accent-text);
+    outline-offset: 3px;
   }
 
   ::selection {
@@ -67,7 +73,7 @@
 @layer components {
 
   .section-label {
-    @apply font-mono text-[11px] tracking-[5px] text-brand uppercase mb-4
+    @apply font-mono text-[11px] tracking-[5px] text-accent uppercase mb-4
            inline-flex items-center gap-2;
   }
 
@@ -91,19 +97,19 @@
 
   .btn-primary {
     @apply inline-flex items-center justify-center px-8 py-4 rounded-2xl
-           bg-brand text-white text-sm font-bold tracking-wide cursor-pointer
+           bg-brand-dark text-white text-sm font-bold tracking-wide cursor-pointer
            transition-all duration-200
-           hover:bg-brand-dark hover:scale-[1.03]
+           hover:bg-brand-800 hover:scale-[1.03]
            hover:shadow-[0_8px_32px_rgba(234,88,12,0.40)]
            active:scale-[0.98];
   }
 
   .btn-secondary {
     @apply inline-flex items-center justify-center px-8 py-4 rounded-2xl
-           border-2 border-brand text-brand bg-transparent
+           border-2 border-accent text-accent bg-transparent
            text-sm font-bold tracking-wide cursor-pointer
            transition-all duration-200
-           hover:bg-brand hover:text-white
+           hover:bg-brand-dark hover:border-brand-dark hover:text-white
            active:scale-[0.98];
   }
 
@@ -122,6 +128,12 @@
 
   .glow-orb {
     @apply absolute rounded-full pointer-events-none blur-[80px];
+  }
+
+  /* Link "Saltar para o conteúdo": invisível até receber foco pelo teclado */
+  .skip-link {
+    @apply fixed left-4 top-4 z-[100] -translate-y-24 rounded-xl bg-brand-dark px-5 py-3
+           text-sm font-bold text-white transition-transform focus:translate-y-0;
   }
 
   /* Painel de info (ex: sobre page) */
@@ -166,6 +178,10 @@
   .section-orange {
     background: linear-gradient(135deg, #EA580C 0%, #F97316 50%, #FB923C 100%);
   }
+  /* Sobre o laranja, o anel de foco laranja não se vê */
+  .section-orange :focus-visible {
+    outline-color: #FFFFFF;
+  }
 
   /* Helpers semânticos — background e border via CSS vars
      (text-fg/muted/subtle gerados pelo Tailwind via colors config) */
@@ -195,4 +211,21 @@
 @keyframes spinSlow {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
+}
+
+/* Quem pede menos movimento ao sistema vê tudo estático
+   (o FadeSection também mostra o conteúdo logo; ver FadeSection.tsx) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  /* Indicador de carregamento é informação, não decoração: continua a rodar */
+  .animate-spin {
+    animation-duration: 1s !important;
+    animation-iteration-count: infinite !important;
+  }
 }

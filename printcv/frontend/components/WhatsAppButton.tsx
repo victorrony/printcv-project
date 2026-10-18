@@ -1,12 +1,10 @@
 'use client'
 
 import { MessageCircle } from 'lucide-react'
-import { linkWhatsApp } from '@/lib/site'
-
-const DEFAULT_MESSAGE = 'Olá! Gostaria de saber mais sobre os serviços da PrintCV.'
+import { SITE, linkWhatsApp } from '@/lib/site'
 
 export function WhatsAppButton() {
-  const url = linkWhatsApp(DEFAULT_MESSAGE)
+  const url = linkWhatsApp(SITE.mensagemWhatsApp)
 
   return (
     <a

@@ -5,6 +5,7 @@ import { ProductCard } from '@/components/ProductCard'
 import { GalleryGrid } from '@/components/GalleryGrid'
 import { getProdutos, getGaleria } from '@/lib/conteudo'
 import Link from 'next/link'
+import { Package } from 'lucide-react'
 
 export default function HomePage() {
   const produtos = getProdutos({ destaque: true, disponivel: true })
@@ -38,7 +39,7 @@ export default function HomePage() {
         ) : (
           <FadeSection>
             <div className="text-center py-20 rounded-2xl border-2 border-dashed border-theme">
-              <div className="text-4xl mb-4">📦</div>
+              <Package size={36} strokeWidth={1.5} className="mx-auto mb-4 text-accent" aria-hidden="true" />
               <p className="text-fg-muted text-sm">
                 Novos produtos em breve.
               </p>
@@ -106,7 +107,7 @@ export default function HomePage() {
             <Link
               href="/orcamento"
               className="inline-flex items-center justify-center px-10 py-4 rounded-2xl
-                         bg-white text-brand text-sm font-bold tracking-wide cursor-pointer
+                         bg-white text-brand-dark text-sm font-bold tracking-wide cursor-pointer
                          transition-all duration-200 hover:scale-[1.03]
                          hover:shadow-[0_8px_32px_rgba(0,0,0,0.2)] active:scale-[0.98]"
             >

@@ -20,7 +20,7 @@ export default function SobrePage() {
           <p className="text-fg-muted text-[16px] leading-relaxed">
             A <strong className="text-fg">PrintCV</strong> é o primeiro serviço de impressão 3D
             profissional em Cabo Verde, baseado na Praia, Santiago. Usamos tecnologia de ponta —
-            a impressora <strong className="text-brand">Bambu Lab</strong> — para produzir peças
+            a impressora <strong className="text-accent">Bambu Lab</strong> — para produzir peças
             com qualidade e precisão, directamente para clientes locais.
           </p>
         </FadeSection>
@@ -33,7 +33,7 @@ export default function SobrePage() {
               { label: 'Localização', value: 'Praia, CV', desc: 'Produção local, entrega rápida no arquipélago' },
             ].map((item, i) => (
               <div key={i} className="info-card">
-                <p className="font-mono text-[10px] tracking-[3px] text-brand uppercase mb-2">{item.label}</p>
+                <p className="font-mono text-[10px] tracking-[3px] text-accent uppercase mb-2">{item.label}</p>
                 <p className="font-bold text-lg text-fg mb-1">{item.value}</p>
                 <p className="text-xs text-fg-muted leading-relaxed">{item.desc}</p>
               </div>
@@ -43,7 +43,7 @@ export default function SobrePage() {
 
         <FadeSection delay={0.3}>
           <div className="info-card">
-            <p className="font-mono text-[10px] tracking-[3px] text-brand uppercase mb-4">O que fazemos</p>
+            <p className="font-mono text-[10px] tracking-[3px] text-accent uppercase mb-4">O que fazemos</p>
             <ul className="flex flex-col gap-3 text-sm text-fg-muted leading-relaxed">
               {[
                 'Peças decorativas e funcionais personalizadas',
@@ -53,7 +53,7 @@ export default function SobrePage() {
                 'Timelapses do processo de impressão camada a camada',
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <span className="text-brand mt-0.5">▸</span>
+                  <span className="text-accent mt-0.5">▸</span>
                   {item}
                 </li>
               ))}
