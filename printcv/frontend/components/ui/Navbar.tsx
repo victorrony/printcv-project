@@ -7,7 +7,6 @@ import { Menu, X } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 
 const NAV_ITEMS = [
-  { href: '/#processo', label: 'Processo' },
   { href: '/galeria', label: 'Galeria' },
   { href: '/loja', label: 'Loja' },
   { href: '/orcamento', label: 'Orçamento' },
