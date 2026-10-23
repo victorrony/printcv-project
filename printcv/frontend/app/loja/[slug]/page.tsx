@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { getProdutos, getProdutoBySlug } from '@/lib/conteudo'
 import { formatPreco } from '@/lib/format'
 import { linkWhatsApp } from '@/lib/site'
 import { FadeSection } from '@/components/ui/FadeSection'
+import { GaleriaProduto } from '@/components/GaleriaProduto'
 import { ArrowLeft, Clock, Ruler, Package } from 'lucide-react'
 import type { Metadata } from 'next'
 
@@ -27,8 +27,6 @@ export default function ProdutoPage({ params }: { params: { slug: string } }) {
   const produto = getProdutoBySlug(params.slug)
   if (!produto) notFound()
 
-  const mainImage = produto.imagens[0] ?? null
-
   return (
     <section className="pt-[100px] pb-[80px] px-6 max-w-5xl mx-auto">
       <FadeSection>
@@ -43,40 +41,7 @@ export default function ProdutoPage({ params }: { params: { slug: string } }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Image */}
         <FadeSection>
-          <div className="relative aspect-square rounded-2xl overflow-hidden bg-elevated border border-theme">
-            {mainImage ? (
-              <Image
-                src={mainImage}
-                alt={produto.nome}
-                fill
-                className="object-cover"
-                priority
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-accent opacity-30">
-                <Package size={96} strokeWidth={1.25} aria-hidden="true" />
-              </div>
-            )}
-          </div>
-
-          {/* Thumbnail gallery */}
-          {produto.imagens.length > 1 && (
-            <div className="flex gap-3 mt-4">
-              {produto.imagens.slice(0, 4).map((img, i) => (
-                <div
-                  key={`${i}-${img}`}
-                  className="relative w-20 h-20 rounded-lg overflow-hidden border border-theme"
-                >
-                  <Image
-                    src={img}
-                    alt={`${produto.nome} - ${i + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+          <GaleriaProduto imagens={produto.imagens} nome={produto.nome} />
         </FadeSection>
 
         {/* Details */}

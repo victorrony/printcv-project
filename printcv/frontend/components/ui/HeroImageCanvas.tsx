@@ -98,10 +98,10 @@ export function HeroImageCanvas({ imageUrl, modelUrl, posterUrl }: HeroImageCanv
         />
       )}
       {posterUrl && (
-        // Disco com o cinzento do fundo da foto: as bordas da foto (4:3) desvanecem
-        // para uma cor quase igual e não se vê o rectângulo
+        // Disco com a foto de estúdio (quadrada, fundo cinza quente); a cor do disco
+        // é a da vinheta da foto, para a borda não se notar
         <div
-          className={`absolute inset-[10%] rounded-full overflow-hidden bg-[#e1e1dd] transition-opacity duration-700 ${
+          className={`absolute inset-[10%] rounded-full overflow-hidden bg-[#E8E5DF] transition-opacity duration-700 ${
             usar3d && carregado ? 'opacity-0' : 'opacity-100'
           }`}
         >
@@ -111,7 +111,7 @@ export function HeroImageCanvas({ imageUrl, modelUrl, posterUrl }: HeroImageCanv
             fill
             priority
             sizes="(min-width: 1024px) 576px, (min-width: 640px) 320px, 224px"
-            className="object-contain [mask-image:radial-gradient(ellipse_50%_37.5%_at_center,black_75%,transparent)]"
+            className="object-cover"
           />
         </div>
       )}

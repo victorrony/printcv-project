@@ -79,7 +79,7 @@ export function HeroSection() {
             <div className="absolute inset-[-60px] rounded-full border border-brand/10 animate-spin-slow" />
             <HeroImageCanvas
               modelUrl="/modelos/mascote.glb"
-              posterUrl="/produtos/mascote-tubarao-cabo-verdiano.png"
+              posterUrl="/produtos/mascote-tubarao-cabo-verdiano.webp"
             />
           </div>
         </div>

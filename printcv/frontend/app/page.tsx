@@ -68,10 +68,10 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto relative">
           <FadeSection>
             <p className="section-label">▸ Making of</p>
-            <h2 className="section-title">Veja a impressão em tempo real</h2>
+            <h2 className="section-title">Trabalhos reais da nossa oficina</h2>
             <p className="text-fg-muted text-[15px] max-w-[500px] leading-relaxed mb-12">
-              Cada peça é filmada pela câmara da impressora. Aqui poderá acompanhar
-              o processo de criação camada por camada.
+              Peças reais, impressas e acabadas na nossa oficina. Veja a impressora
+              a trabalhar e o resultado final.
             </p>
           </FadeSection>
 

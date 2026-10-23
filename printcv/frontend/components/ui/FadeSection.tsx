@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useEffect, useState, type ReactNode } from 'react'
+import { useMenosMovimento } from '@/lib/useMenosMovimento'
 
 interface FadeSectionProps {
   children: ReactNode
@@ -11,12 +12,13 @@ interface FadeSectionProps {
 export function FadeSection({ children, delay = 0, className = '' }: FadeSectionProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
+  const menosMovimento = useMenosMovimento()
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
     // Com "reduzir movimento", o conteúdo aparece logo, sem esperar pelo scroll
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (menosMovimento) {
       setVisible(true)
       return
     }
@@ -33,7 +35,7 @@ export function FadeSection({ children, delay = 0, className = '' }: FadeSection
 
     observer.observe(el)
     return () => observer.disconnect()
-  }, [])
+  }, [menosMovimento])
 
   return (
     <div

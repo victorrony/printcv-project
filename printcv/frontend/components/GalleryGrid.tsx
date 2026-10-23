@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Clapperboard, Clock, Play } from 'lucide-react'
 import { FadeSection } from '@/components/ui/FadeSection'
+import { VideoLoop } from '@/components/ui/VideoLoop'
 import type { GaleriaItem } from '@/lib/types'
 
 interface GalleryGridProps {
@@ -31,13 +32,22 @@ export function GalleryGrid({ items, nivelTitulo: Titulo = 'h3' }: GalleryGridPr
         return (
           <FadeSection key={item.id} delay={i * 0.1}>
             <div className="rounded-2xl overflow-hidden card-hover">
-              <div className="relative h-[240px] bg-elevated">
-                {imageUrl ? (
+              <div className="relative aspect-square bg-elevated">
+                {item.video_timelapse ? (
+                  <VideoLoop
+                    src={item.video_timelapse}
+                    poster={imageUrl ?? undefined}
+                    titulo={item.titulo}
+                    ajuste={item.inteira ? 'contain' : 'cover'}
+                    foco={item.foco}
+                  />
+                ) : imageUrl ? (
                   <Image
                     src={imageUrl}
                     alt={item.titulo}
                     fill
-                    className="object-cover"
+                    className={item.inteira ? 'object-contain p-3' : 'object-cover'}
+                    style={item.foco ? { objectPosition: item.foco } : undefined}
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 ) : (

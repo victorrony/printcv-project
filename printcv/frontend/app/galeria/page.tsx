@@ -17,8 +17,8 @@ export default function GaleriaPage() {
         <p className="section-label">▸ Making of</p>
         <h1 className="section-title">Galeria</h1>
         <p className="text-fg-muted text-[15px] max-w-[500px] leading-relaxed mb-12">
-          Cada peça é filmada pela câmara da impressora. Acompanhe o processo de criação
-          camada por camada.
+          Peças que já saíram da nossa impressora, fotografadas e filmadas na oficina,
+          na Praia. Do primeiro barco de teste ao acabamento pintado à mão.
         </p>
       </FadeSection>
 
