@@ -180,6 +180,111 @@ const GALERIA: GaleriaItem[] = [
     data: '2026-05-09',
     destaque: false,
   },
+  {
+    id: 9,
+    titulo: 'Porta-latas "garra de dragão"',
+    descricao: 'Garra de dragão com base em rocha que segura uma lata. Detalhe fino em PLA cinzento.',
+    imagens: ['/galeria/porta-latas-garra.webp'],
+    material: 'PLA',
+    data: '2026-07-21',
+    destaque: false,
+  },
+  {
+    id: 10,
+    titulo: 'Suporte para portátil',
+    descricao: 'Suporte dobrável que eleva o portátil para uma posição de trabalho mais confortável.',
+    imagens: ['/galeria/suporte-portatil.webp'],
+    material: 'PLA',
+    data: '2026-05-30',
+    destaque: false,
+  },
+  {
+    id: 11,
+    titulo: 'Benchy acabado',
+    descricao: 'O barco de teste da impressão 3D, depois de retirado da placa: mostra a precisão das camadas e das pontes.',
+    imagens: ['/galeria/benchy.webp'],
+    material: 'PLA',
+    data: '2026-05-30',
+    destaque: false,
+  },
+  {
+    id: 12,
+    titulo: 'A chegada da Bambu Lab A1',
+    descricao: 'O dia em que a impressora da PrintCV saiu da caixa.',
+    imagens: ['/galeria/chegada-impressora.webp'],
+    data: '2026-05-07',
+    destaque: false,
+  },
+  {
+    id: 13,
+    titulo: 'Acessório para retirar peças da placa',
+    descricao: 'Acessório para a Bambu Lab que ajuda a soltar as peças da placa metálica no fim da impressão.',
+    imagens: ['/galeria/raspador-placa.webp'],
+    material: 'PLA',
+    data: '2026-05-30',
+    destaque: false,
+  },
+  {
+    id: 14,
+    titulo: 'A primeira configuração',
+    descricao: 'A A1 a ser montada e a actualizar o firmware antes da primeira impressão. Vídeo acelerado 4×.',
+    imagens: ['/videos/primeira-configuracao-poster.webp'],
+    video_timelapse: '/videos/primeira-configuracao.mp4',
+    data: '2026-05-09',
+    destaque: false,
+  },
+  {
+    id: 15,
+    titulo: 'O bico em acção',
+    descricao: 'O bico da impressora a depositar o filamento, camada a camada. Vídeo acelerado 2×.',
+    imagens: ['/videos/bico-a-imprimir-poster.webp'],
+    video_timelapse: '/videos/bico-a-imprimir.mp4',
+    material: 'PLA',
+    data: '2026-05-09',
+    destaque: false,
+  },
+  // Portfólio: peças que reproduzem marcas ou pessoas reais. Mostram o que a
+  // impressora faz, mas não estão à venda (decisão do dono, 2026-10-23).
+  {
+    id: 16,
+    portfolio: true,
+    titulo: 'Porta-chaves ténis',
+    descricao: 'Miniatura de ténis em PLA azul, com o detalhe das costuras e da sola.',
+    imagens: ['/galeria/porta-chaves-tenis.webp'],
+    material: 'PLA',
+    data: '2026-05-30',
+    destaque: false,
+  },
+  {
+    id: 17,
+    portfolio: true,
+    titulo: 'Porta-chaves multicolor 2026',
+    descricao: 'Porta-chaves multicolor em três cores.',
+    imagens: ['/galeria/porta-chaves-multicolor-2026.webp'],
+    material: 'PLA',
+    data: '2026-05-30',
+    destaque: false,
+  },
+  {
+    id: 18,
+    portfolio: true,
+    titulo: 'Figura de super-herói pintada',
+    descricao: 'Figura articulada em pose de acção, impressa e pintada à mão.',
+    imagens: ['/galeria/figura-super-heroi.webp'],
+    material: 'PLA',
+    data: '2026-07-21',
+    destaque: false,
+  },
+  {
+    id: 19,
+    portfolio: true,
+    titulo: 'Estátua de futebolista',
+    descricao: 'Estátua com base, em PLA branco, com muito detalhe na figura.',
+    imagens: ['/galeria/estatua-futebolista.webp'],
+    material: 'PLA',
+    data: '2026-07-21',
+    destaque: false,
+  },
 ]
 
 export function getCategorias(): Categoria[] {
@@ -206,5 +311,8 @@ export function getProdutoBySlug(slug: string): Produto | undefined {
 export function getGaleria(filtros?: { destaque?: boolean }): GaleriaItem[] {
   return GALERIA.filter(
     (g) => filtros?.destaque === undefined || g.destaque === filtros.destaque
-  ).sort((a, b) => b.data.localeCompare(a.data))
+  ).sort(
+    // Trabalhos próprios primeiro; peças de portfólio no fim; depois por data
+    (a, b) => Number(Boolean(a.portfolio)) - Number(Boolean(b.portfolio)) || b.data.localeCompare(a.data)
+  )
 }

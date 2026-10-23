@@ -34,6 +34,8 @@ export interface GaleriaItem {
   foco?: string
   /** Mostra a foto inteira no cartão (fotos de grupo largas), em vez de a recortar */
   inteira?: boolean
+  /** Peça só de portfólio (marcas ou pessoas reais): mostrada, mas não está à venda */
+  portfolio?: boolean
   tempo_impressao?: string
   material?: 'PLA' | 'PETG' | 'TPU'
   /** AAAA-MM-DD */

@@ -30,7 +30,8 @@ export function GalleryGrid({ items, nivelTitulo: Titulo = 'h3' }: GalleryGridPr
         const imageUrl = item.imagens[0] ?? null
 
         return (
-          <FadeSection key={item.id} delay={i * 0.1}>
+          // Atraso por coluna (0–0,2 s), para não crescer com o número de cartões
+          <FadeSection key={item.id} delay={(i % 3) * 0.1}>
             <div className="rounded-2xl overflow-hidden card-hover">
               <div className="relative aspect-square bg-elevated">
                 {item.video_timelapse ? (
@@ -56,6 +57,12 @@ export function GalleryGrid({ items, nivelTitulo: Titulo = 'h3' }: GalleryGridPr
                       <Play size={22} fill="currentColor" aria-hidden="true" />
                     </div>
                   </div>
+                )}
+
+                {item.portfolio && (
+                  <span className="absolute top-3 left-3 font-mono text-[10px] tracking-[2px] uppercase text-fg bg-surface/90 backdrop-blur-sm px-2.5 py-1 rounded-md">
+                    Portfólio · não está à venda
+                  </span>
                 )}
 
                 {item.tempo_impressao && (
