@@ -191,6 +191,23 @@
   .section-orange :focus-visible {
     outline-color: #FFFFFF;
   }
+  /* Lightbox da galeria: fundo sempre escuro, anel de foco branco */
+  .lightbox :focus-visible {
+    outline-color: #FFFFFF;
+  }
+  .lightbox[open],
+  .lightbox-media {
+    animation: lightbox-entra 0.2s ease-out;
+  }
+  @keyframes lightbox-entra {
+    from { opacity: 0; transform: scale(0.98); }
+  }
+  /* A página por trás não desliza com o lightbox aberto */
+  html:has(.lightbox[open]) {
+    overflow: hidden;
+    /* Guarda o lugar da barra de deslocamento, para a página não saltar para o lado */
+    scrollbar-gutter: stable;
+  }
 
   /* Helper de borda via CSS var (os fundos bg-page/surface/elevated/muted
      são gerados pelo Tailwind a partir dos canais RGB, com opacidade) */

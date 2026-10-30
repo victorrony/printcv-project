@@ -22,7 +22,7 @@ export default function GaleriaPage() {
         </p>
       </FadeSection>
 
-      <GalleryGrid items={items} nivelTitulo="h2" />
+      <GalleryGrid items={items} nivelTitulo="h2" comFiltros />
     </section>
   )
 }

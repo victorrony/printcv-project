@@ -14,12 +14,14 @@ interface VideoLoopProps {
   ajuste?: 'cover' | 'contain'
   /** object-position quando o vídeo é recortado */
   foco?: string
+  /** Pára o vídeo enquanto outra vista o mostra (ex.: lightbox aberto) */
+  suspenso?: boolean
 }
 
 // Vídeo curto em loop, sem som. Só descarrega e toca quando está visível e pára fora
 // do ecrã. Não toca sozinho com "reduzir movimento" nem com "poupar dados", e tem
 // sempre um botão de pausa (WCAG 2.2.2).
-export function VideoLoop({ src, poster, titulo, ajuste = 'cover', foco }: VideoLoopProps) {
+export function VideoLoop({ src, poster, titulo, ajuste = 'cover', foco, suspenso = false }: VideoLoopProps) {
   const ref = useRef<HTMLVideoElement>(null)
   const menosMovimento = useMenosMovimento()
   const [poupaDados, setPoupaDados] = useState(false)
@@ -31,7 +33,8 @@ export function VideoLoop({ src, poster, titulo, ajuste = 'cover', foco }: Video
     setPoupaDados(Boolean((navigator as NavegadorExtra).connection?.saveData))
   }, [])
 
-  const deveTocar = escolha === 'tocar' || (escolha === 'auto' && !menosMovimento && !poupaDados)
+  const deveTocar =
+    !suspenso && (escolha === 'tocar' || (escolha === 'auto' && !menosMovimento && !poupaDados))
 
   useEffect(() => {
     const video = ref.current
@@ -67,7 +70,7 @@ export function VideoLoop({ src, poster, titulo, ajuste = 'cover', foco }: Video
         type="button"
         onClick={() => setEscolha(aTocar ? 'pausar' : 'tocar')}
         aria-label={aTocar ? `Pausar vídeo: ${titulo}` : `Reproduzir vídeo: ${titulo}`}
-        className="absolute bottom-3 left-3 flex h-10 w-10 items-center justify-center rounded-full bg-surface/85 text-fg shadow backdrop-blur-sm transition-colors hover:text-accent after:absolute after:-inset-1"
+        className="absolute bottom-3 left-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-surface/85 text-fg shadow backdrop-blur-sm transition-colors hover:text-accent after:absolute after:-inset-1"
       >
         {aTocar ? (
           <Pause size={16} fill="currentColor" aria-hidden="true" />
