@@ -4,10 +4,15 @@
 
 /* ── Variáveis de tema ── */
 :root {
-  --bg-page:       #FAFAF8;
-  --bg-surface:    #FFFFFF;
-  --bg-elevated:   #F5F4F0;
-  --bg-muted:      #F0EEE9;
+  /* Fundos: os canais RGB são a fonte; as cores derivam deles */
+  --bg-page-rgb:     250 250 248;  /* #FAFAF8 */
+  --bg-surface-rgb:  255 255 255;  /* #FFFFFF */
+  --bg-elevated-rgb: 245 244 240;  /* #F5F4F0 */
+  --bg-muted-rgb:    240 238 233;  /* #F0EEE9 */
+  --bg-page:       rgb(var(--bg-page-rgb));
+  --bg-surface:    rgb(var(--bg-surface-rgb));
+  --bg-elevated:   rgb(var(--bg-elevated-rgb));
+  --bg-muted:      rgb(var(--bg-muted-rgb));
   --border:        #E5E3DC;
   --border-subtle: #EFEDE8;
   --fg:            #1C1917;
@@ -22,10 +27,14 @@
 }
 
 .dark {
-  --bg-page:       #0C0A09;
-  --bg-surface:    #1C1917;
-  --bg-elevated:   #292524;
-  --bg-muted:      #3C3836;
+  --bg-page-rgb:     12 10 9;      /* #0C0A09 */
+  --bg-surface-rgb:  28 25 23;     /* #1C1917 */
+  --bg-elevated-rgb: 41 37 36;     /* #292524 */
+  --bg-muted-rgb:    60 56 54;     /* #3C3836 */
+  --bg-page:       rgb(var(--bg-page-rgb));
+  --bg-surface:    rgb(var(--bg-surface-rgb));
+  --bg-elevated:   rgb(var(--bg-elevated-rgb));
+  --bg-muted:      rgb(var(--bg-muted-rgb));
   --border:        rgba(255,255,255,0.08);
   --border-subtle: rgba(255,255,255,0.05);
   --fg:            #FAF9F7;
@@ -183,11 +192,8 @@
     outline-color: #FFFFFF;
   }
 
-  /* Helpers semânticos — background e border via CSS vars
-     (text-fg/muted/subtle gerados pelo Tailwind via colors config) */
-  .bg-page        { background-color: var(--bg-page) !important; }
-  .bg-surface     { background-color: var(--bg-surface) !important; }
-  .bg-elevated    { background-color: var(--bg-elevated) !important; }
+  /* Helper de borda via CSS var (os fundos bg-page/surface/elevated/muted
+     são gerados pelo Tailwind a partir dos canais RGB, com opacidade) */
   .border-theme   { border-color: var(--border) !important; }
 }
 

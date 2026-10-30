@@ -285,6 +285,27 @@ const GALERIA: GaleriaItem[] = [
     data: '2026-07-21',
     destaque: false,
   },
+  {
+    id: 20,
+    portfolio: true,
+    titulo: 'Quadro em relevo a preto e branco',
+    descricao: 'Retrato em relevo impresso camada a camada, com a moldura também impressa em 3D.',
+    imagens: ['/galeria/quadro-relevo-preto-branco.webp'],
+    material: 'PLA',
+    data: '2026-10-30',
+    destaque: false,
+  },
+  {
+    id: 21,
+    portfolio: true,
+    titulo: 'Quadro em relevo de super-herói',
+    descricao: 'Quadro multicolor em relevo, impresso camada a camada em várias cores.',
+    imagens: ['/galeria/quadro-relevo-super-heroi.webp'],
+    foco: 'center 25%',
+    material: 'PLA',
+    data: '2026-10-30',
+    destaque: false,
+  },
 ]
 
 export function getCategorias(): Categoria[] {

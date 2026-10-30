@@ -25,10 +25,13 @@ const config: Config = {
           light: '#10B981',
           dark: '#047857',
         },
-        /* Tokens estáticos (fallback) */
-        page:    '#FAFAF8',
-        surface: '#FFFFFF',
-        elevated: '#F5F4F0',
+        /* Fundos do tema: canais RGB em variáveis CSS (app/globals.css), para o
+           Tailwind poder aplicar opacidade (bg-surface/90) e para border-/text-
+           acompanharem o tema */
+        page:     'rgb(var(--bg-page-rgb) / <alpha-value>)',
+        surface:  'rgb(var(--bg-surface-rgb) / <alpha-value>)',
+        elevated: 'rgb(var(--bg-elevated-rgb) / <alpha-value>)',
+        muted:    'rgb(var(--bg-muted-rgb) / <alpha-value>)',
         /* Tokens semânticos via variáveis CSS — adaptam-se ao tema */
         /* Texto laranja com contraste AA em ambos os temas (o brand fica para fundos) */
         accent: 'var(--accent-text)',
@@ -43,12 +46,6 @@ const config: Config = {
           surface: '#292524',
           border: 'rgba(255,255,255,0.08)',
         },
-      },
-      backgroundColor: {
-        page:    'var(--bg-page)',
-        surface: 'var(--bg-surface)',
-        elevated:'var(--bg-elevated)',
-        muted:   'var(--bg-muted)',
       },
       borderColor: {
         theme:  'var(--border)',
