@@ -1,63 +1,54 @@
-import type { Metadata } from 'next'
-import { Space_Grotesk, DM_Sans, JetBrains_Mono } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+import localFont from 'next/font/local'
 import './globals.css'
 import { Navbar } from '@/components/ui/Navbar'
 import { Footer } from '@/components/ui/Footer'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
-import { ThemeProvider } from '@/components/ui/ThemeProvider'
-// import { IsoGridBackground } from '@/components/ui/IsoGridBackground'
+import { PadroesPano } from '@/components/pano/Padroes'
 
-// Fontes servidas pelo próprio site (sem pedido bloqueante ao Google Fonts)
-const display = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' })
-const body = DM_Sans({
-  subsets: ['latin'],
-  variable: '--font-body',
-  // Tamanho óptico como no @import antigo; sem itálico (não é usado e era mais uma fonte pré-carregada)
-  axes: ['opsz'],
+// Uma só família variável: a largura (wdth) faz a hierarquia —
+// larga nos títulos, normal no texto, estreita nos dados.
+// Archivo (Omnibus-Type, SIL Open Font License 1.1), subconjunto latino, servido pelo próprio site:
+// o build não depende da rede para ir buscar a fonte.
+const archivo = localFont({
+  src: './fonts/Archivo-latin-var.woff2',
+  variable: '--font-archivo',
+  weight: '100 900',
+  style: 'normal',
+  display: 'swap',
+  declarations: [{ prop: 'font-stretch', value: '62% 125%' }],
 })
-const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
 
 export const metadata: Metadata = {
-  title: 'PrintCV — Impressão 3D em Cabo Verde',
+  title: 'PrintCV — Impressão 3D na Praia, Cabo Verde',
   description:
-    'Peças personalizadas, protótipos, decoração e muito mais. Produção local na Praia, Santiago — com tecnologia Bambu Lab.',
+    'Peças impressas em 3D na Praia, Santiago: lembranças, peças por medida e protótipos. Peça orçamento pelo WhatsApp.',
   openGraph: {
-    title: 'PrintCV — Impressão 3D em Cabo Verde',
-    description: 'Do digital ao real. Impressão 3D profissional na Praia, Santiago.',
+    title: 'PrintCV — Impressão 3D na Praia, Cabo Verde',
+    description: 'Imprimimos em 3D, camada a camada, na Praia.',
     locale: 'pt_CV',
     type: 'website',
   },
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export const viewport: Viewport = {
+  themeColor: '#141C44',
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="pt"
-      suppressHydrationWarning
-      className={`${display.variable} ${body.variable} ${mono.variable}`}
-    >
+    <html lang="pt" className={archivo.variable}>
       <body>
+        <PadroesPano />
         <a href="#conteudo" className="skip-link">
           Saltar para o conteúdo
         </a>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {/* <IsoGridBackground /> */}
-          <Navbar />
-          <main id="conteudo" tabIndex={-1} className="outline-none">
-            {children}
-          </main>
-          <Footer />
-          <WhatsAppButton />
-        </ThemeProvider>
+        <Navbar />
+        <main id="conteudo" tabIndex={-1} className="outline-none">
+          {children}
+        </main>
+        <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   )

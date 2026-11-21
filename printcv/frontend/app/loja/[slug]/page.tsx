@@ -1,12 +1,13 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getProdutos, getProdutoBySlug } from '@/lib/conteudo'
+import type { Metadata } from 'next'
+import { ArrowLeft, MessageCircle } from 'lucide-react'
+import { getProdutoBySlug, getProdutos } from '@/lib/conteudo'
 import { formatPreco } from '@/lib/format'
 import { linkWhatsApp } from '@/lib/site'
-import { FadeSection } from '@/components/ui/FadeSection'
 import { GaleriaProduto } from '@/components/GaleriaProduto'
-import { ArrowLeft, Clock, Ruler, Package } from 'lucide-react'
-import type { Metadata } from 'next'
+import { Emenda } from '@/components/pano/Padroes'
+import { TiraProduto } from '@/components/TiraProduto'
 
 export const dynamicParams = false
 
@@ -27,88 +28,96 @@ export default function ProdutoPage({ params }: { params: { slug: string } }) {
   const produto = getProdutoBySlug(params.slug)
   if (!produto) notFound()
 
+  const preco = produto.preco_sob_consulta ? 'A combinar' : formatPreco(produto.preco)
+  const etiqueta = [
+    { nome: 'Material', valor: produto.material },
+    { nome: 'Dimensões', valor: produto.dimensoes },
+    { nome: 'Tempo de impressão', valor: produto.tempo_producao },
+    { nome: 'Categoria', valor: produto.categoria?.nome },
+  ].filter((l): l is { nome: string; valor: string } => Boolean(l.valor))
+  const outros = getProdutos({ disponivel: true }).filter((p) => p.id !== produto.id).slice(0, 3)
+
   return (
-    <section className="pt-[100px] pb-[80px] px-6 max-w-5xl mx-auto">
-      <FadeSection>
-        <Link
-          href="/loja"
-          className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-accent transition-colors mb-8"
-        >
-          <ArrowLeft size={16} /> Voltar à loja
-        </Link>
-      </FadeSection>
+    <>
+      <section className="banda-clara pb-20 pt-8 md:pb-28 md:pt-10">
+        <div className="moldura">
+          <Link href="/loja" className="ligacao inline-flex items-center gap-2 text-[0.95rem]">
+            <ArrowLeft size={16} aria-hidden="true" /> Loja
+          </Link>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Image */}
-        <FadeSection>
-          <GaleriaProduto imagens={produto.imagens} nome={produto.nome} />
-        </FadeSection>
+          <div className="mt-8 grid gap-10 md:grid-cols-[1.1fr_1fr] lg:gap-16">
+            <GaleriaProduto imagens={produto.imagens} nome={produto.nome} />
 
-        {/* Details */}
-        <FadeSection delay={0.2}>
-          {produto.categoria && (
-            <span className="inline-block font-mono text-[10px] tracking-[2px] text-accent bg-brand/10 px-3 py-1 rounded-md uppercase mb-4">
-              {produto.categoria.nome}
-            </span>
-          )}
+            <div>
+              <h1 className="letra-larga text-[clamp(2.25rem,4.4vw,3.75rem)]">{produto.nome}</h1>
+              <p className="letra-larga numeros mt-6 text-[clamp(2rem,3.6vw,3rem)]">{preco}</p>
+              <p className="mt-6 max-w-[58ch] text-[1.08rem] leading-relaxed">{produto.descricao}</p>
 
-          <h1 className="text-3xl font-extrabold tracking-tight mb-4 text-fg">
-            {produto.nome}
-          </h1>
+              {/* A etiqueta cosida no pano: os dados da peça */}
+              {etiqueta.length > 0 && (
+                <div className="mt-8 border-2 border-indigo p-1.5">
+                  <dl className="border-2 border-dashed border-indigo-tinta px-5 py-4">
+                    {etiqueta.map((linha) => (
+                      <div
+                        key={linha.nome}
+                        className="flex items-baseline justify-between gap-6 border-b border-algodao-sombra py-2.5 last:border-0"
+                      >
+                        <dt className="letra-estreita text-xs text-algodao-texto">{linha.nome}</dt>
+                        <dd className="numeros text-right font-semibold">{linha.valor}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              )}
 
-          <p className="text-fg-muted leading-relaxed mb-8">
-            {produto.descricao}
-          </p>
-
-          {/* Price */}
-          <div className="text-3xl font-extrabold font-mono bg-gradient-to-r from-teal to-teal-light bg-clip-text text-transparent mb-8">
-            {produto.preco_sob_consulta ? 'A combinar' : formatPreco(produto.preco)}
+              {produto.disponivel ? (
+                <a
+                  href={linkWhatsApp(
+                    `Olá! Gostaria de encomendar "${produto.nome}" (${produto.preco_sob_consulta ? 'preço a combinar' : formatPreco(produto.preco)}). Podem dar-me mais informações?`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="accao-whatsapp mt-8 w-full sm:w-auto"
+                >
+                  <MessageCircle size={18} aria-hidden="true" />
+                  Encomendar pelo WhatsApp
+                </a>
+              ) : (
+                <p className="mt-8 border-2 border-indigo px-5 py-4 font-semibold">
+                  Esta peça está indisponível de momento.
+                </p>
+              )}
+              <p className="mt-4 text-sm text-algodao-texto">
+                Abre o WhatsApp com a mensagem já escrita. Cor ou medida diferente?{' '}
+                <Link href="/orcamento" className="ligacao text-indigo">
+                  Peça por medida
+                </Link>
+                .
+              </p>
+            </div>
           </div>
+        </div>
+      </section>
 
-          {/* Specs */}
-          <div className="flex flex-col gap-3 mb-8 p-5 rounded-xl bg-elevated border border-theme">
-            {produto.material && (
-              <div className="flex items-center gap-3 text-sm">
-                <Package size={16} className="text-accent" />
-                <span className="text-fg-muted">Material:</span>
-                <span className="font-semibold text-fg">{produto.material}</span>
+      {outros.length > 0 && (
+        <>
+          <Emenda motivo="riscas" tom="claro" altura={10} />
+          <section aria-labelledby="titulo-outros" className="banda-clara pb-20 pt-14 md:pb-28">
+            <div className="moldura">
+              <h2 id="titulo-outros" className="letra-larga text-[clamp(1.75rem,3vw,2.5rem)]">
+                Também na loja
+              </h2>
+              <div className="tiras mt-8">
+                <div className="grid grid-cols-1 sm:grid-cols-3">
+                  {outros.map((p) => (
+                    <TiraProduto key={p.id} produto={p} />
+                  ))}
+                </div>
               </div>
-            )}
-            {produto.dimensoes && (
-              <div className="flex items-center gap-3 text-sm">
-                <Ruler size={16} className="text-accent" />
-                <span className="text-fg-muted">Dimensões:</span>
-                <span className="font-semibold text-fg">{produto.dimensoes}</span>
-              </div>
-            )}
-            {produto.tempo_producao && (
-              <div className="flex items-center gap-3 text-sm">
-                <Clock size={16} className="text-accent" />
-                <span className="text-fg-muted">Tempo de produção:</span>
-                <span className="font-semibold text-fg">{produto.tempo_producao}</span>
-              </div>
-            )}
-          </div>
-
-          {/* CTA */}
-          <a
-            href={linkWhatsApp(
-              `Olá! Estou interessado no produto "${produto.nome}" (${produto.preco_sob_consulta ? 'preço a combinar' : formatPreco(produto.preco)}). Podem dar-me mais informações?`
-            )}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary inline-flex items-center gap-2 w-full justify-center"
-          >
-            Encomendar via WhatsApp
-          </a>
-
-          {!produto.disponivel && (
-            <p className="text-center text-sm text-fg-muted mt-3">
-              Este produto está temporariamente indisponível.
-            </p>
-          )}
-        </FadeSection>
-      </div>
-    </section>
+            </div>
+          </section>
+        </>
+      )}
+    </>
   )
 }

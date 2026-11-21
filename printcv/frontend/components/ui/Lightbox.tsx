@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Clock, X } from 'lucide-react'
 import { useMenosMovimento } from '@/lib/useMenosMovimento'
 import type { GaleriaItem } from '@/lib/types'
+import { formatData } from '@/lib/format'
 
 interface LightboxProps {
   items: GaleriaItem[]
@@ -58,7 +59,7 @@ export function Lightbox({ items, indice, onMudar, onFechar }: LightboxProps) {
         if (Math.abs(dx) > 50) passar(dx < 0 ? 1 : -1)
       }}
       aria-labelledby="lightbox-titulo"
-      className="lightbox fixed inset-0 m-0 h-full max-h-none w-full max-w-none bg-black/95 p-0 text-white backdrop:bg-transparent"
+      className="lightbox fixed inset-0 m-0 h-full max-h-none w-full max-w-none bg-preto p-0 text-algodao"
     >
       {item && (
         // Clicar fora da imagem (no fundo escuro) fecha
@@ -67,16 +68,16 @@ export function Lightbox({ items, indice, onMudar, onFechar }: LightboxProps) {
           onClick={(e) => { if (e.target === e.currentTarget) ref.current?.close() }}
         >
           <div className="flex items-center justify-between px-4 py-3">
-            <p className="font-mono text-xs tracking-[2px] text-white/70">
+            <p className="letra-estreita numeros text-sm text-indigo-claro">
               {indice! + 1} / {total}
             </p>
             <button
               type="button"
               onClick={() => ref.current?.close()}
-              aria-label="Fechar"
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+                            className="flex h-11 items-center gap-2 border-2 border-algodao px-3 font-semibold transition-colors hover:bg-algodao hover:text-indigo"
             >
-              <X size={22} aria-hidden="true" />
+              <X size={20} aria-hidden="true" />
+              Fechar
             </button>
           </div>
 
@@ -96,7 +97,7 @@ export function Lightbox({ items, indice, onMudar, onFechar }: LightboxProps) {
                 playsInline
                 autoPlay={!menosMovimento}
                 aria-label={item.titulo}
-                className="max-h-full max-w-full rounded-lg"
+                className="max-h-full max-w-full"
               />
             ) : item.imagens[0] ? (
               <Image
@@ -105,7 +106,7 @@ export function Lightbox({ items, indice, onMudar, onFechar }: LightboxProps) {
                 width={0}
                 height={0}
                 sizes="(min-width: 768px) 80vw, 100vw"
-                className="h-auto max-h-full w-auto max-w-full rounded-lg"
+                className="h-auto max-h-full w-auto max-w-full"
               />
             ) : null}
           </div>
@@ -119,7 +120,8 @@ export function Lightbox({ items, indice, onMudar, onFechar }: LightboxProps) {
           )}
 
           <div className="mx-auto w-full max-w-2xl px-6 pb-6 pt-4 text-center" aria-live="polite">
-            <div className="mb-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[2px] text-white/70">
+            <div className="letra-estreita numeros mb-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-indigo-claro">
+              <span>{formatData(item.data)}</span>
               {item.material && <span>{item.material}</span>}
               {item.tempo_impressao && (
                 <span>
@@ -129,9 +131,9 @@ export function Lightbox({ items, indice, onMudar, onFechar }: LightboxProps) {
               )}
               {item.portfolio && <span>Portfólio · não está à venda</span>}
             </div>
-            <h2 id="lightbox-titulo" className="text-lg font-bold">{item.titulo}</h2>
+            <h2 id="lightbox-titulo" className="text-xl font-bold">{item.titulo}</h2>
             {item.descricao && (
-              <p className="mt-1 text-sm leading-relaxed text-white/75">{item.descricao}</p>
+              <p className="mt-1 leading-relaxed text-indigo-claro">{item.descricao}</p>
             )}
 
             {total > 1 && (
@@ -158,7 +160,7 @@ function BotaoPassar({ direcao, onClick, className }: {
       type="button"
       onClick={() => onClick(direcao)}
       aria-label={direcao === 1 ? 'Trabalho seguinte' : 'Trabalho anterior'}
-      className={`${className} h-12 w-12 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20`}
+      className={`${className} h-12 w-12 items-center justify-center border-2 border-algodao transition-colors hover:bg-algodao hover:text-indigo`}
     >
       <Icone size={24} aria-hidden="true" />
     </button>

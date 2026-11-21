@@ -1,93 +1,34 @@
 import type { Config } from 'tailwindcss'
 
+// Mundo "Pano di Terra": duas tintas (índigo e algodão), sem cinzentos.
+// O amarelo é só para acções que abrem o WhatsApp; o preto só para a banda dos timelapses.
 const config: Config = {
-  content: [
-    './app/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-  ],
-  darkMode: 'class',
+  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        brand: {
-          DEFAULT: '#EA580C',
-          light: '#F97316',
-          dark: '#C2410C',
-          800: '#9A3412',
-          50: '#FFF7ED',
-          100: '#FFEDD5',
-          500: '#EA580C',
-          600: '#C2410C',
-          900: '#431407',
+        indigo: {
+          DEFAULT: '#141C44', // fundo das bandas escuras e texto sobre algodão
+          tinta: '#22327A', // tinta do padrão sobre índigo; texto secundário forte
+          claro: '#B9C0E0', // texto secundário sobre índigo
+          fio: '#5A6699', // linhas da urdidura e costuras sobre índigo
         },
-        teal: {
-          DEFAULT: '#059669',
-          light: '#10B981',
-          dark: '#047857',
+        algodao: {
+          DEFAULT: '#F3F2EC', // fundo das bandas claras
+          sombra: '#E4E2D8', // trama sobre algodão (pontos, divisões)
+          texto: '#3B4677', // texto secundário sobre algodão (índigo esbatido)
         },
-        /* Fundos do tema: canais RGB em variáveis CSS (app/globals.css), para o
-           Tailwind poder aplicar opacidade (bg-surface/90) e para border-/text-
-           acompanharem o tema */
-        page:     'rgb(var(--bg-page-rgb) / <alpha-value>)',
-        surface:  'rgb(var(--bg-surface-rgb) / <alpha-value>)',
-        elevated: 'rgb(var(--bg-elevated-rgb) / <alpha-value>)',
-        muted:    'rgb(var(--bg-muted-rgb) / <alpha-value>)',
-        /* Tokens semânticos via variáveis CSS — adaptam-se ao tema */
-        /* Texto laranja com contraste AA em ambos os temas (o brand fica para fundos) */
-        accent: 'var(--accent-text)',
-        fg: {
-          DEFAULT: 'var(--fg)',
-          muted:   'var(--fg-muted)',
-          subtle:  'var(--fg-subtle)',
+        preto: '#0B0B0F',
+        amarelo: {
+          DEFAULT: '#F2C230',
+          forte: '#E0AE14',
         },
-        dark: {
-          DEFAULT: '#0C0A09',
-          card: '#1C1917',
-          surface: '#292524',
-          border: 'rgba(255,255,255,0.08)',
-        },
-      },
-      borderColor: {
-        theme:  'var(--border)',
-        subtle: 'var(--border-subtle)',
       },
       fontFamily: {
-        /* Variáveis definidas pelo next/font em app/layout.tsx */
-        display: ['var(--font-display)', 'sans-serif'],
-        body: ['var(--font-body)', 'sans-serif'],
-        mono: ['var(--font-mono)', 'monospace'],
+        sans: ['var(--font-archivo)', 'system-ui', 'sans-serif'],
       },
-      animation: {
-        'fade-up':    'fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards',
-        'float-slow': 'floatSlow 8s ease-in-out infinite',
-        'float-mid':  'floatSlow 6s ease-in-out infinite reverse',
-        'spin-slow':  'spin 20s linear infinite',
-        'spin-slower':'spin 35s linear infinite reverse',
-        'pulse-glow': 'pulseGlow 2.5s ease-in-out infinite',
-        'shimmer':    'shimmer 3s linear infinite',
-        'layer-rise': 'layerRise 1s cubic-bezier(0.16,1,0.3,1) forwards',
-      },
-      keyframes: {
-        fadeUp: {
-          from: { opacity: '0', transform: 'translateY(32px)' },
-          to:   { opacity: '1', transform: 'translateY(0)' },
-        },
-        floatSlow: {
-          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-          '50%':      { transform: 'translateY(-18px) rotate(3deg)' },
-        },
-        pulseGlow: {
-          '0%, 100%': { opacity: '0.6' },
-          '50%':      { opacity: '1' },
-        },
-        shimmer: {
-          '0%':   { backgroundPosition: '-200% center' },
-          '100%': { backgroundPosition: '200% center' },
-        },
-        layerRise: {
-          from: { opacity: '0', transform: 'translateY(20px) scaleX(0.8)' },
-          to:   { opacity: '1', transform: 'translateY(0) scaleX(1)' },
-        },
+      maxWidth: {
+        pano: '84rem',
       },
     },
   },

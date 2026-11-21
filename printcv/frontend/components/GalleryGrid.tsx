@@ -2,11 +2,11 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { Clapperboard, Clock, Maximize2, Play } from 'lucide-react'
-import { FadeSection } from '@/components/ui/FadeSection'
+import { Clock, Maximize2 } from 'lucide-react'
 import { VideoLoop } from '@/components/ui/VideoLoop'
 import { Lightbox } from '@/components/ui/Lightbox'
 import type { GaleriaItem } from '@/lib/types'
+import { formatData } from '@/lib/format'
 
 interface GalleryGridProps {
   items: GaleriaItem[]
@@ -31,14 +31,9 @@ export function GalleryGrid({ items, nivelTitulo: Titulo = 'h3', comFiltros = fa
 
   if (items.length === 0) {
     return (
-      <FadeSection>
-        <div className="text-center py-20 rounded-2xl border-2 border-dashed border-theme">
-          <Clapperboard size={36} strokeWidth={1.5} className="mx-auto mb-4 text-accent" aria-hidden="true" />
-          <p className="text-fg-muted text-sm">
-            Novos trabalhos em breve.
-          </p>
-        </div>
-      </FadeSection>
+      <div className="border-2 border-indigo px-6 py-16 text-center">
+        <p className="text-[1.1rem]">Os primeiros trabalhos aparecem aqui em breve.</p>
+      </div>
     )
   }
 
@@ -56,7 +51,7 @@ export function GalleryGrid({ items, nivelTitulo: Titulo = 'h3', comFiltros = fa
   return (
     <>
       {comFiltros && (
-        <div className="mb-8 flex flex-wrap gap-2" role="group" aria-label="Filtrar trabalhos">
+        <div className="mb-10 flex flex-wrap gap-2" role="group" aria-label="Filtrar trabalhos">
           {FILTROS.map((f) => {
             const quantos = items.filter(f.aceita).length
             if (quantos === 0) return null
@@ -67,13 +62,14 @@ export function GalleryGrid({ items, nivelTitulo: Titulo = 'h3', comFiltros = fa
                 type="button"
                 onClick={() => setFiltro(f.id)}
                 aria-pressed={activo}
-                className={`rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
+                className={`inline-flex min-h-[2.75rem] items-center gap-2 border-2 px-4 text-[0.95rem] font-semibold transition-colors ${
                   activo
-                    ? 'border-brand-dark bg-brand-dark text-white'
-                    : 'border-theme bg-surface text-fg-muted hover:text-accent'
+                    ? 'border-indigo bg-indigo text-algodao'
+                    : 'border-indigo hover:bg-algodao-sombra'
                 }`}
               >
-                {f.nome} <span className="font-mono text-xs font-normal">{quantos}</span>
+                {f.nome}{' '}
+                <span className={`numeros text-sm ${activo ? 'text-indigo-claro' : 'text-algodao-texto'}`}>{quantos}</span>
               </button>
             )
           })}
@@ -83,16 +79,16 @@ export function GalleryGrid({ items, nivelTitulo: Titulo = 'h3', comFiltros = fa
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {visiveis.map((item, i) => {
+      <div className="tiras">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {visiveis.map((item) => {
           const imageUrl = item.imagens[0] ?? null
           const indiceAbrir = abriveis.indexOf(item)
 
           return (
-            // Atraso por coluna (0–0,2 s), para não crescer com o número de cartões
-            <FadeSection key={item.id} delay={(i % 3) * 0.1}>
-              <div className="group rounded-2xl overflow-hidden card-hover">
-                <div className="relative aspect-square overflow-hidden bg-elevated">
+            <li key={item.id} className="tira">
+              <div className="group h-full bg-algodao">
+                <div className="relative aspect-square overflow-hidden bg-algodao-sombra">
                   {item.video_timelapse ? (
                     <VideoLoop
                       src={item.video_timelapse}
@@ -111,13 +107,7 @@ export function GalleryGrid({ items, nivelTitulo: Titulo = 'h3', comFiltros = fa
                       style={item.foco ? { objectPosition: item.foco } : undefined}
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-14 h-14 rounded-full bg-brand/20 border-2 border-brand/40 flex items-center justify-center text-accent">
-                        <Play size={22} fill="currentColor" aria-hidden="true" />
-                      </div>
-                    </div>
-                  )}
+                  ) : null}
 
                   {/* Cobre o cartão para o abrir em grande; o botão de pausa do vídeo fica por cima */}
                   {indiceAbrir !== -1 && (
@@ -131,7 +121,7 @@ export function GalleryGrid({ items, nivelTitulo: Titulo = 'h3', comFiltros = fa
                       />
                       <span
                         aria-hidden="true"
-                        className="pointer-events-none absolute top-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-surface/85 text-fg opacity-0 shadow backdrop-blur-sm transition-opacity group-hover:opacity-100 peer-focus-visible:opacity-100"
+                        className="pointer-events-none absolute right-0 top-0 z-[3] flex h-10 w-10 items-center justify-center bg-algodao text-indigo opacity-0 transition-opacity group-hover:opacity-100 peer-focus-visible:opacity-100"
                       >
                         <Maximize2 size={15} />
                       </span>
@@ -139,34 +129,35 @@ export function GalleryGrid({ items, nivelTitulo: Titulo = 'h3', comFiltros = fa
                   )}
 
                   {item.portfolio && (
-                    <span className="pointer-events-none absolute top-3 left-3 font-mono text-[10px] tracking-[2px] uppercase text-fg bg-surface/90 backdrop-blur-sm px-2.5 py-1 rounded-md">
+                    <span className="letra-estreita pointer-events-none absolute left-0 top-0 z-[3] bg-indigo px-3 py-1.5 text-[0.7rem] text-algodao">
                       Portfólio · não está à venda
                     </span>
                   )}
 
                   {item.tempo_impressao && (
-                    <span className="pointer-events-none absolute bottom-3 right-3 font-mono text-[11px] text-accent bg-surface/80 backdrop-blur-sm px-2 py-1 rounded-md">
+                    <span className="numeros pointer-events-none absolute bottom-0 right-0 bg-algodao px-2.5 py-1.5 text-xs">
                       <Clock size={11} className="inline -mt-0.5 mr-1" aria-hidden="true" />
                       <span className="sr-only">Tempo de impressão:</span> {item.tempo_impressao}
                     </span>
                   )}
                 </div>
 
-                <div className="p-5">
-                  {item.material && (
-                    <span className="font-mono text-[10px] tracking-[2px] text-accent uppercase">
-                      {item.material}
-                    </span>
-                  )}
-                  <Titulo className="text-base font-bold mt-1 text-fg">{item.titulo}</Titulo>
+                <div className="px-5 pb-6 pt-4">
+                  <Titulo className="text-[1.1rem] font-bold leading-snug">{item.titulo}</Titulo>
+                  <span className="letra-estreita numeros mt-1 block text-xs text-algodao-texto">
+                    {formatData(item.data)}
+                    {item.material && ` · ${item.material}`}
+                    {item.video_timelapse && ' · vídeo'}
+                  </span>
                   {item.descricao && (
-                    <p className="text-xs text-fg-muted mt-2 line-clamp-2">{item.descricao}</p>
+                    <p className="mt-2 line-clamp-2 text-[0.95rem] leading-relaxed text-algodao-texto">{item.descricao}</p>
                   )}
                 </div>
               </div>
-            </FadeSection>
+            </li>
           )
         })}
+      </ul>
       </div>
 
       <Lightbox items={abriveis} indice={aberto} onMudar={setAberto} onFechar={fechar} />

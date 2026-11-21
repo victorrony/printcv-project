@@ -70,7 +70,7 @@ export function VideoLoop({ src, poster, titulo, ajuste = 'cover', foco, suspens
         type="button"
         onClick={() => setEscolha(aTocar ? 'pausar' : 'tocar')}
         aria-label={aTocar ? `Pausar vídeo: ${titulo}` : `Reproduzir vídeo: ${titulo}`}
-        className="absolute bottom-3 left-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-surface/85 text-fg shadow backdrop-blur-sm transition-colors hover:text-accent after:absolute after:-inset-1"
+        className="absolute bottom-0 left-0 z-10 flex h-11 w-11 items-center justify-center bg-algodao text-indigo transition-colors hover:bg-indigo hover:text-algodao"
       >
         {aTocar ? (
           <Pause size={16} fill="currentColor" aria-hidden="true" />

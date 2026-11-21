@@ -1,5 +1,6 @@
 node_modules/
 .next/
+.next-verificacao/
 .env.local
 .env*.local
 out/

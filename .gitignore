@@ -28,3 +28,4 @@ Thumbs.db
 
 # TypeScript (build incremental)
 *.tsbuildinfo
+printcv/frontend/.next-verificacao/

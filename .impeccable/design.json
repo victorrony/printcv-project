@@ -1,0 +1,379 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-21T08:57:49+00:00",
+  "title": "Design System: PrintCV",
+  "extensions": {
+    "colorMeta": {
+      "indigo": {
+        "role": "primary",
+        "displayName": "Deep Indigo",
+        "canonical": "oklch(24.5% 0.076 271.3)",
+        "tonalRamp": [
+          "#05091E",
+          "#1B2341",
+          "#343F68",
+          "#515F8D",
+          "#7280B0",
+          "#95A3D2",
+          "#BBC8F0",
+          "#E3EEFF"
+        ]
+      },
+      "indigo-tinta": {
+        "role": "secondary",
+        "displayName": "Pattern Indigo",
+        "canonical": "oklch(35.0% 0.124 269.4)",
+        "tonalRamp": [
+          "#030529",
+          "#141F52",
+          "#2A3B7F",
+          "#455BA7",
+          "#657DCC",
+          "#88A1EE",
+          "#B0C7FF",
+          "#DBEDFF"
+        ]
+      },
+      "indigo-claro": {
+        "role": "secondary",
+        "displayName": "Washed Indigo",
+        "canonical": "oklch(81.3% 0.046 275.6)",
+        "tonalRamp": [
+          "#080A16",
+          "#202436",
+          "#3B4059",
+          "#5A5F7C",
+          "#7A819E",
+          "#9DA3C1",
+          "#C2C8E0",
+          "#E9EDFF"
+        ]
+      },
+      "indigo-fio": {
+        "role": "secondary",
+        "displayName": "Warp Thread",
+        "canonical": "oklch(52.2% 0.082 273.2)",
+        "tonalRamp": [
+          "#06081F",
+          "#1B2243",
+          "#353E6B",
+          "#525E90",
+          "#727FB4",
+          "#95A2D6",
+          "#BBC7F3",
+          "#E3EDFF"
+        ]
+      },
+      "algodao": {
+        "role": "primary",
+        "displayName": "Undyed Cotton",
+        "canonical": "oklch(96.0% 0.008 98.9)",
+        "tonalRamp": [
+          "#0C0B09",
+          "#262522",
+          "#43423E",
+          "#62615C",
+          "#83827D",
+          "#A6A5A0",
+          "#CAC9C5",
+          "#EFEEEB"
+        ]
+      },
+      "algodao-sombra": {
+        "role": "secondary",
+        "displayName": "Cotton Shade",
+        "canonical": "oklch(91.2% 0.014 97.5)",
+        "tonalRamp": [
+          "#0C0B08",
+          "#26251F",
+          "#44423B",
+          "#636159",
+          "#848279",
+          "#A7A59C",
+          "#CBC9C2",
+          "#F0EFE9"
+        ]
+      },
+      "algodao-texto": {
+        "role": "secondary",
+        "displayName": "Faded Indigo Ink",
+        "canonical": "oklch(40.9% 0.083 272.7)",
+        "tonalRamp": [
+          "#06081F",
+          "#1B2244",
+          "#343E6B",
+          "#515E91",
+          "#717FB5",
+          "#94A2D7",
+          "#BBC7F4",
+          "#E3EDFF"
+        ]
+      },
+      "preto": {
+        "role": "neutral",
+        "displayName": "Night Black",
+        "canonical": "oklch(15.2% 0.009 285.3)",
+        "tonalRamp": [
+          "#0B0B0D",
+          "#252528",
+          "#414146",
+          "#606166",
+          "#828287",
+          "#A4A4AA",
+          "#C8C9CD",
+          "#EEEEF2"
+        ]
+      },
+      "amarelo": {
+        "role": "tertiary",
+        "displayName": "Cotton Yellow",
+        "canonical": "oklch(83.4% 0.158 89.0)",
+        "tonalRamp": [
+          "#1A0500",
+          "#3C1D00",
+          "#613800",
+          "#855800",
+          "#A87A00",
+          "#CA9F00",
+          "#E9C566",
+          "#FFECA5"
+        ]
+      },
+      "amarelo-forte": {
+        "role": "tertiary",
+        "displayName": "Deep Yellow",
+        "canonical": "oklch(77.5% 0.155 87.2)",
+        "tonalRamp": [
+          "#1B0400",
+          "#3D1C00",
+          "#623800",
+          "#865700",
+          "#AA7900",
+          "#CC9E0C",
+          "#EAC469",
+          "#FFEBA7"
+        ]
+      },
+      "erro": {
+        "role": "neutral",
+        "displayName": "Error Red",
+        "canonical": "oklch(44.8% 0.162 26.8)",
+        "tonalRamp": [
+          "#280000",
+          "#520000",
+          "#80020B",
+          "#AA2D29",
+          "#D2534A",
+          "#F67B70",
+          "#FFA99D",
+          "#FFD6CC"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page H1s and the home closing line; expanded 125%, woven in on load."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Band titles, 16-18ch; the same expanded style sets the wordmark and prices."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Step titles, product names, lightbox titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text, 38-60ch."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Support paragraph under a page or hero title, washed indigo on dark."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Condensed uppercase facts: form labels, category, dates, status tags."
+      },
+      "action": {
+        "displayName": "Action",
+        "purpose": "Button text, slightly expanded 112%."
+      }
+    },
+    "shadows": [
+      {
+        "name": "floating-action",
+        "value": "0 6px 18px rgba(20,28,68,0.35)",
+        "purpose": "Only the fixed mobile WhatsApp button, which floats over content after the first screen."
+      },
+      {
+        "name": "focus-ring",
+        "value": "0 0 0 3px #F3F2EC, 0 0 0 6px #22327A",
+        "purpose": "Two-ring focus outline on fields and the upload drop zone; not elevation."
+      }
+    ],
+    "motion": [
+      {
+        "name": "tecer",
+        "value": "clip-path inset(100% 0 0 0) to inset(0), 0.9s steps(9, end)",
+        "purpose": "The one authored moment: page H1s weave in bottom-up in nine layers."
+      },
+      {
+        "name": "loom-sync",
+        "value": "12 rows, row count = ceil(currentTime / duration * 12), min 1",
+        "purpose": "The loom cloth weaves in step with the timelapse; complete when paused, reduced-motion or save-data."
+      },
+      {
+        "name": "state-change",
+        "value": "150ms colour/transform",
+        "purpose": "Button, link and strip hover states."
+      },
+      {
+        "name": "photo-zoom",
+        "value": "scale(1.03), 500ms ease-out",
+        "purpose": "Product and mosaic photos on hover."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "all animations and transitions 0.01ms",
+        "purpose": "Headings appear whole, cloth complete; only the upload spinner keeps turning."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "WhatsApp Action",
+      "kind": "button",
+      "refersTo": "button-whatsapp",
+      "description": "The only yellow element: every control that opens WhatsApp.",
+      "html": "<button class=\"ds-btn-whatsapp\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\"/></svg>Pedir pelo WhatsApp</button>",
+      "css": ".ds-btn-whatsapp { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 24px; background: #F2C230; color: #141C44; border: 0; border-radius: 0; font-family: Archivo, system-ui, sans-serif; font-size: 0.95rem; font-weight: 700; font-stretch: 112%; cursor: pointer; transition: background-color 150ms, transform 150ms; } .ds-btn-whatsapp:hover { background: #E0AE14; } .ds-btn-whatsapp:active { transform: translateY(1px); } .ds-btn-whatsapp:focus-visible { outline: 3px solid #22327A; outline-offset: 3px; }"
+    },
+    {
+      "name": "Line Action",
+      "kind": "button",
+      "refersTo": "button-line",
+      "description": "Secondary action that does not open WhatsApp; inverts to a solid fill on hover.",
+      "html": "<button class=\"ds-btn-line\">Pedido com fotografia</button>",
+      "css": ".ds-btn-line { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 24px; background: transparent; color: #141C44; border: 2px solid currentColor; border-radius: 0; font-family: Archivo, system-ui, sans-serif; font-size: 0.95rem; font-weight: 700; font-stretch: 112%; cursor: pointer; transition: background-color 150ms, color 150ms; } .ds-btn-line:hover { background: #141C44; color: #F3F2EC; border-color: #141C44; } .ds-btn-line:focus-visible { outline: 3px solid #22327A; outline-offset: 3px; }"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Plain cotton field with a 2px indigo edge, condensed caps label above.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">O seu nome</span><input class=\"ds-field-input\" placeholder=\"Ex.: Maria Tavares\"></label>",
+      "css": ".ds-field { display: block; font-family: Archivo, system-ui, sans-serif; } .ds-field-label { display: block; margin-bottom: 8px; font-size: 0.8rem; font-weight: 600; font-stretch: 75%; text-transform: uppercase; letter-spacing: 0.06em; color: #141C44; } .ds-field-input { width: 100%; padding: 14px 16px; font: inherit; font-size: 1rem; background: #F3F2EC; color: #141C44; border: 2px solid #141C44; border-radius: 0; outline: none; transition: box-shadow 150ms; } .ds-field-input::placeholder { color: #5A6699; } .ds-field-input:focus-visible, .ds-field-input:focus { box-shadow: 0 0 0 3px #F3F2EC, 0 0 0 6px #22327A; } .ds-field-input[aria-invalid='true'] { border-color: #9B1C1C; }"
+    },
+    {
+      "name": "Navigation Bar",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Sticky cotton bar closed by a stitched seam; brand mark, links, compact WhatsApp action.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-brand\" href=\"#\"><svg width=\"30\" height=\"30\" viewBox=\"0 0 48 48\" aria-hidden=\"true\"><rect width=\"48\" height=\"48\" fill=\"#141C44\"/><g fill=\"#F3F2EC\"><rect x=\"12\" y=\"7.5\" width=\"18\" height=\"3\"/><rect x=\"12\" y=\"11.9\" width=\"7\" height=\"3\"/><rect x=\"27\" y=\"11.9\" width=\"7\" height=\"3\"/><rect x=\"12\" y=\"16.3\" width=\"7\" height=\"3\"/><rect x=\"28\" y=\"16.3\" width=\"7\" height=\"3\"/><rect x=\"12\" y=\"20.7\" width=\"7\" height=\"3\"/><rect x=\"27\" y=\"20.7\" width=\"7\" height=\"3\"/><rect x=\"12\" y=\"25.1\" width=\"18\" height=\"3\"/><rect x=\"12\" y=\"29.5\" width=\"7\" height=\"3\"/><rect x=\"12\" y=\"33.9\" width=\"7\" height=\"3\"/><rect x=\"12\" y=\"38.3\" width=\"7\" height=\"3\"/><rect x=\"30\" y=\"8.5\" width=\"2\" height=\"2\"/><rect x=\"30\" y=\"26.1\" width=\"2\" height=\"2\"/></g></svg><span>PrintCV</span></a><ul class=\"ds-nav-links\"><li><a href=\"#\" aria-current=\"page\">Loja</a></li><li><a href=\"#\">Galeria</a></li><li><a href=\"#\">Orçamento</a></li><li><a href=\"#\">Sobre</a></li></ul></nav><div class=\"ds-seam\"></div>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 64px; padding: 0 20px; background: #F3F2EC; color: #141C44; font-family: Archivo, system-ui, sans-serif; } .ds-nav-brand { display: flex; align-items: center; gap: 12px; color: inherit; text-decoration: none; font-size: 1.35rem; font-weight: 800; font-stretch: 125%; letter-spacing: -0.03em; line-height: 1; } .ds-nav-links { display: flex; gap: 32px; list-style: none; margin: 0; padding: 0; } .ds-nav-links a { color: inherit; font-size: 0.95rem; font-weight: 600; text-decoration: none; text-decoration-thickness: 3px; text-underline-offset: 0.45em; } .ds-nav-links a:hover, .ds-nav-links a[aria-current='page'] { text-decoration-line: underline; } .ds-nav-links a:focus-visible { outline: 3px solid #22327A; outline-offset: 3px; } .ds-seam { height: 2px; color: #141C44; background-image: repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 18px); }"
+    },
+    {
+      "name": "Product Strip",
+      "kind": "card",
+      "refersTo": "tira-produto",
+      "description": "A tira of cotton sewn to its neighbours by stitched seams; no shadow, hover shades the cloth.",
+      "html": "<a class=\"ds-tira\" href=\"#\"><div class=\"ds-tira-img\"><span class=\"ds-tira-nofoto\">Foto a caminho</span></div><div class=\"ds-tira-body\"><h3>Porta-chaves Cabo Verde</h3><span class=\"ds-tira-cat\">Lembranças</span><div class=\"ds-tira-foot\"><span class=\"ds-tira-price\">350 ECV</span><span class=\"ds-tira-time\">2 h</span></div></div></a>",
+      "css": ".ds-tira { position: relative; display: flex; flex-direction: column; width: 240px; background: #F3F2EC; color: #141C44; text-decoration: none; font-family: Archivo, system-ui, sans-serif; transition: background-color 150ms; } .ds-tira::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; color: #22327A; background-image: repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 18px); } .ds-tira::after { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 2px; color: #22327A; background-image: repeating-linear-gradient(180deg, currentColor 0 10px, transparent 10px 18px); } .ds-tira:hover { background: #E4E2D8; } .ds-tira:hover h3 { text-decoration: underline; } .ds-tira:focus-visible { outline: 3px solid #22327A; outline-offset: 3px; } .ds-tira-img { position: relative; aspect-ratio: 4 / 5; background-color: #F3F2EC; background-image: linear-gradient(45deg, #141C44 25%, transparent 25%, transparent 75%, #141C44 75%), linear-gradient(45deg, #141C44 25%, transparent 25%, transparent 75%, #141C44 75%); background-size: 12px 12px; background-position: 0 0, 6px 6px; } .ds-tira-nofoto { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); white-space: nowrap; background: #F3F2EC; padding: 6px 12px; font-size: 0.75rem; font-weight: 600; font-stretch: 75%; text-transform: uppercase; letter-spacing: 0.06em; } .ds-tira-body { display: flex; flex-direction: column; gap: 4px; padding: 16px 20px 24px; } .ds-tira-body h3 { margin: 0; font-size: 1.2rem; font-weight: 700; line-height: 1.375; } .ds-tira-cat { font-size: 0.75rem; font-weight: 600; font-stretch: 75%; text-transform: uppercase; letter-spacing: 0.06em; color: #3B4677; } .ds-tira-foot { display: flex; align-items: baseline; justify-content: space-between; padding-top: 16px; } .ds-tira-price { font-size: 1.75rem; font-weight: 800; font-stretch: 125%; letter-spacing: -0.03em; font-variant-numeric: tabular-nums lining-nums; } .ds-tira-time { font-size: 0.875rem; color: #3B4677; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Emenda (band join)",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Seam, woven lozenge strip, seam: the join between an indigo band and the next.",
+      "html": "<div class=\"ds-emenda\"><div class=\"ds-seam-fio\"></div><svg class=\"ds-faixa\" aria-hidden=\"true\"><defs><pattern id=\"ds-losango\" width=\"20\" height=\"20\" patternUnits=\"userSpaceOnUse\"><rect width=\"20\" height=\"20\" fill=\"#141C44\"/><path d=\"M10 1 19 10 10 19 1 10Z\" fill=\"#F3F2EC\"/><path d=\"M10 6 14 10 10 14 6 10Z\" fill=\"#141C44\"/></pattern></defs><rect width=\"100%\" height=\"100%\" fill=\"url(#ds-losango)\"/></svg><div class=\"ds-seam-fio\"></div></div>",
+      "css": ".ds-emenda { background: #141C44; padding: 6px 0; } .ds-seam-fio { height: 2px; color: #5A6699; background-image: repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 18px); } .ds-faixa { display: block; width: 100%; height: 20px; margin: 6px 0; }"
+    },
+    {
+      "name": "Data Label",
+      "kind": "chip",
+      "refersTo": "field-label",
+      "description": "Condensed caps fact under a title; the status tag variant sits flush in an image corner.",
+      "html": "<span class=\"ds-label\">12 nov 2026 · vídeo acelerado</span> <span class=\"ds-tag\">Indisponível</span>",
+      "css": ".ds-label { font-family: Archivo, system-ui, sans-serif; font-size: 0.75rem; font-weight: 600; font-stretch: 75%; text-transform: uppercase; letter-spacing: 0.06em; color: #3B4677; font-variant-numeric: tabular-nums lining-nums; } .ds-tag { display: inline-block; padding: 6px 12px; background: #141C44; color: #F3F2EC; font-family: Archivo, system-ui, sans-serif; font-size: 0.75rem; font-weight: 600; font-stretch: 75%; text-transform: uppercase; letter-spacing: 0.06em; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Pano di Terra",
+    "overview": "**Creative North Star: \"Pano di Terra\"**\n\nThe site is a Cabo Verdean pano di terra. Every section is a full-width woven band, indigo or undyed cotton, sewn to the next by a visible stitched seam and a narrow strip of panu-obra pattern (lozenge, tooth, check, stripe). The cloth is built bottom-up, row on row, the same way the workshop's printer lays down a piece layer on layer; that one analogy drives the pattern, the brand mark, the loom and the only authored motion.\n\nDensity is calm and generous: few elements per band, large expanded headlines, wide bands of colour doing the work that cards and shadows do elsewhere. Hierarchy comes from band colour and from the width of one variable typeface, never from added ornaments. Nothing floats, glows or rounds off; the material is flat cloth with square edges and stitched joins.\n\nThe page ends the way a cloth ends: in a fringe of loose indigo threads on cotton.",
+    "keyCharacteristics": [
+      "Two inks, no greys: indigo and cotton, with tints of indigo for secondary roles.",
+      "Full-width bands joined by stitched seams and woven pattern strips.",
+      "One variable family; hierarchy by font-stretch (125 / 100 / 75).",
+      "Square corners everywhere; flat surfaces; no card shadows.",
+      "Yellow means \"this opens WhatsApp\" and nothing else.",
+      "One black band per page, the timelapse climax.",
+      "Motion is stepped and bottom-up, like layers being laid."
+    ],
+    "rules": [
+      {
+        "name": "The Two Inks Rule",
+        "body": "There are no greys. Every neutral is indigo, cotton, or a tint mixed from them. A new surface picks indigo or cotton as its ground and takes its secondary colours from that ground's family.",
+        "section": "colors"
+      },
+      {
+        "name": "The WhatsApp Yellow Rule",
+        "body": "Yellow appears only on controls that open WhatsApp. A link that goes to the shop, a filter, a tab or a \"send photo\" control that does not open WhatsApp is never yellow. On indigo, a link's underline may turn yellow on hover only because it sits in the band that holds the WhatsApp action; it is never a fill.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Black Band Rule",
+        "body": "Night black is the climax, used once per page (the timelapse band) and by the lightbox. It is not a third band colour to alternate with.",
+        "section": "colors"
+      },
+      {
+        "name": "The Stretch Rule",
+        "body": "Hierarchy is made by font-stretch, not by a second family: 125% names, 100% tells, 75% states facts. Never introduce another display face.",
+        "section": "typography"
+      },
+      {
+        "name": "The Data Under the Title Rule",
+        "body": "Facts sit under or beside the thing they describe (category under the product name, date under the photo title, legend beside the loom caption). No small label is ever stacked above a heading as an eyebrow.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Cloth Rule",
+        "body": "Nothing at rest casts a shadow. The only shadow belongs to the one element that physically floats over the page.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do build every new section as a full-width band in indigo or cotton, and join bands of different ground with an Emenda (seam, pattern strip 12–20px, seam).",
+      "Do take secondary text from the ground's own family: washed indigo (#B9C0E0) on indigo and black, faded indigo ink (#3B4677) on cotton.",
+      "Do sew grids edge to edge with stitched seams (2px, 10px dashes, 8px gaps) instead of gaps, borders or shadows.",
+      "Do name bands in expanded heavy type (125%), and put facts in condensed caps (75%) under the thing they describe.",
+      "Do give every WhatsApp control the yellow ground with indigo text and the speech-bubble icon.",
+      "Do fill a missing photo with a woven motif and say what is missing in words.",
+      "Do keep motion stepped and bottom-up, and show the finished state when motion is reduced."
+    ],
+    "donts": [
+      "Don't introduce greys, a second hue, or a colour gradient (the seams' repeating dashes are the only gradient in the code); every neutral is indigo, cotton or a tint of them.",
+      "Don't use yellow on anything that does not open WhatsApp.",
+      "Don't use night black for more than one band per page.",
+      "Don't round corners or use pills; the system is 0px.",
+      "Don't put shadows on strips, panels or buttons; the floating mobile WhatsApp button is the only shadow.",
+      "Don't stack an eyebrow label above a heading.",
+      "Don't add a second typeface or a system display face; stretch Archivo instead.",
+      "Don't add floating, glowing or easing-in decorative motion."
+    ]
+  }
+}

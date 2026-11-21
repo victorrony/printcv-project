@@ -1,108 +1,117 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
-import { ThemeToggle } from './ThemeToggle'
+import { Menu, MessageCircle, X } from 'lucide-react'
+import { MarcaPano } from '@/components/pano/Padroes'
+import { SITE, linkWhatsApp } from '@/lib/site'
 
 const NAV_ITEMS = [
-  { href: '/galeria', label: 'Galeria' },
   { href: '/loja', label: 'Loja' },
+  { href: '/galeria', label: 'Galeria' },
   { href: '/orcamento', label: 'Orçamento' },
   { href: '/sobre', label: 'Sobre' },
 ]
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
-  // '/loja/x' também marca 'Loja'; '/#processo' nunca fica activo
-  const ativo = (href: string) => !href.includes('#') && (pathname === href || pathname.startsWith(href + '/'))
+  // '/loja/x' também marca 'Loja'
+  const ativo = (href: string) => pathname === href || pathname.startsWith(href + '/')
 
+  // Fecha o menu ao mudar de página e com Escape
+  useEffect(() => setMenuOpen(false), [pathname])
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false)
+    window.addEventListener('keydown', onKey)
+    // A página por trás não desliza enquanto o menu está aberto
+    const antes = document.documentElement.style.overflow
+    document.documentElement.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.documentElement.style.overflow = antes
+    }
+  }, [menuOpen])
 
   return (
-    <nav
-      style={{
-        backgroundColor: scrolled ? 'var(--nav-bg)' : 'transparent',
-        borderBottomColor: scrolled ? 'var(--nav-border)' : 'transparent',
-      }}
-      className={`fixed top-0 left-0 right-0 z-50 h-[70px] transition-all duration-300 ${scrolled ? 'backdrop-blur-2xl border-b shadow-sm' : ''
-        }`}
-    >
-      <div className="max-w-6xl mx-auto h-full px-6 lg:px-0 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-[10px] bg-gradient-to-br from-brand to-brand-light flex items-center justify-center text-[15px] font-extrabold text-white font-mono transition-transform group-hover:scale-110 shadow-[0_4px_12px_rgba(234,88,12,0.4)]">
-            3D
-          </div>
-          <span className="font-mono font-bold text-lg tracking-tight text-fg">
-            PRINT<span className="text-accent">CV</span>
-          </span>
+    <header className="banda-clara sticky top-0 z-50">
+      <nav aria-label="Principal" className="moldura flex h-16 items-center justify-between gap-6">
+        <Link href="/" className="flex items-center gap-3" aria-label="PrintCV, página inicial">
+          <MarcaPano tamanho={30} />
+          <span className="letra-larga text-[1.35rem] leading-none">PrintCV</span>
         </Link>
 
-        {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <ul className="hidden items-center gap-8 md:flex">
           {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={ativo(item.href) ? 'page' : undefined}
-              className={`text-xs font-semibold tracking-[2px] uppercase transition-colors hover:text-accent ${
-                ativo(item.href) ? 'text-accent' : 'text-fg-muted'
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
-
-        {/* Actions */}
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
-
-          <button
-            type="button"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
-            aria-expanded={menuOpen}
-            aria-controls="menu-movel"
-            className="md:hidden -mr-2.5 p-2.5 text-fg-muted"
-          >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div
-          id="menu-movel"
-          style={{ backgroundColor: 'var(--nav-bg)', borderBottomColor: 'var(--nav-border)' }}
-          className="absolute top-[70px] left-0 right-0 backdrop-blur-2xl border-b px-6 py-4 md:hidden shadow-lg"
-        >
-          <div className="max-w-6xl mx-auto">
-            {NAV_ITEMS.map((item) => (
+            <li key={item.href}>
               <Link
-                key={item.href}
                 href={item.href}
-                onClick={() => setMenuOpen(false)}
                 aria-current={ativo(item.href) ? 'page' : undefined}
-                className={`block py-3 text-sm font-semibold tracking-wide hover:text-accent transition-colors border-b border-theme last:border-0 ${
-                  ativo(item.href) ? 'text-accent' : 'text-fg-muted'
+                className={`text-[0.95rem] font-semibold decoration-[3px] underline-offset-[0.45em] transition-colors hover:underline ${
+                  ativo(item.href) ? 'underline' : ''
                 }`}
               >
                 {item.label}
               </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex items-center gap-2">
+          <a
+            href={linkWhatsApp(SITE.mensagemWhatsApp)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="accao-whatsapp hidden min-h-[2.5rem] px-4 text-sm sm:inline-flex"
+          >
+            <MessageCircle size={17} aria-hidden="true" />
+            WhatsApp
+          </a>
+          <button
+            type="button"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-expanded={menuOpen}
+            aria-controls="menu-movel"
+            className="-mr-2 flex h-11 items-center gap-2 px-2 text-[0.95rem] font-semibold md:hidden"
+          >
+            {menuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+            {menuOpen ? 'Fechar' : 'Menu'}
+          </button>
+        </div>
+      </nav>
+      <div aria-hidden="true" className="costura text-indigo" />
+
+      {menuOpen && (
+        <div id="menu-movel" className="banda-escura fixed inset-x-0 bottom-0 top-[66px] overflow-y-auto md:hidden">
+          <ul className="moldura py-2">
+            {NAV_ITEMS.map((item) => (
+              <li key={item.href} className="border-b border-indigo-tinta last:border-0">
+                <Link
+                  href={item.href}
+                  aria-current={ativo(item.href) ? 'page' : undefined}
+                  className="letra-larga flex min-h-[3.5rem] items-center justify-between text-[1.6rem]"
+                >
+                  {item.label}
+                  {ativo(item.href) && <span className="letra-estreita text-xs text-indigo-claro">Aqui</span>}
+                </Link>
+              </li>
             ))}
+          </ul>
+          <div className="moldura pb-6">
+            <a
+              href={linkWhatsApp(SITE.mensagemWhatsApp)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="accao-whatsapp w-full"
+            >
+              <MessageCircle size={18} aria-hidden="true" />
+              Falar pelo WhatsApp
+            </a>
           </div>
         </div>
       )}
-    </nav>
+    </header>
   )
 }

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { Package } from 'lucide-react'
+import { SemFoto } from '@/components/TiraProduto'
 
 interface GaleriaProdutoProps {
   imagens: string[]
@@ -15,26 +15,24 @@ export function GaleriaProduto({ imagens, nome }: GaleriaProdutoProps) {
   const principal = imagens[atual] ?? null
 
   return (
-    <>
-      <div className="relative aspect-square rounded-2xl overflow-hidden bg-elevated border border-theme">
+    <div>
+      <div className="relative aspect-square overflow-hidden bg-algodao-sombra">
         {principal ? (
           <Image
             src={principal}
             alt={imagens.length > 1 ? `${nome} — imagem ${atual + 1} de ${imagens.length}` : nome}
             fill
             className="object-cover"
-            sizes="(min-width: 1024px) 460px, (min-width: 768px) 45vw, 100vw"
+            sizes="(min-width: 1024px) 640px, (min-width: 768px) 52vw, 100vw"
             priority
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-accent opacity-30">
-            <Package size={96} strokeWidth={1.25} aria-hidden="true" />
-          </div>
+          <SemFoto motivo="xadrez" />
         )}
       </div>
 
       {imagens.length > 1 && (
-        <div className="flex gap-3 mt-4">
+        <div className="mt-2 flex gap-2">
           {imagens.slice(0, 4).map((img, i) => (
             <button
               key={`${i}-${img}`}
@@ -42,8 +40,8 @@ export function GaleriaProduto({ imagens, nome }: GaleriaProdutoProps) {
               onClick={() => setAtual(i)}
               aria-label={`Ver imagem ${i + 1} de ${imagens.length}`}
               aria-pressed={i === atual}
-              className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
-                i === atual ? 'border-brand' : 'border-theme hover:border-brand/50'
+              className={`relative h-20 w-20 overflow-hidden border-2 transition-colors ${
+                i === atual ? 'border-indigo' : 'border-transparent hover:border-indigo-fio'
               }`}
             >
               <Image src={img} alt="" fill className="object-cover" sizes="80px" />
@@ -51,6 +49,6 @@ export function GaleriaProduto({ imagens, nome }: GaleriaProdutoProps) {
           ))}
         </div>
       )}
-    </>
+    </div>
   )
 }

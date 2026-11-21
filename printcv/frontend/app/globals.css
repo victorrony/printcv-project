@@ -2,242 +2,243 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Variáveis de tema ── */
-:root {
-  /* Fundos: os canais RGB são a fonte; as cores derivam deles */
-  --bg-page-rgb:     250 250 248;  /* #FAFAF8 */
-  --bg-surface-rgb:  255 255 255;  /* #FFFFFF */
-  --bg-elevated-rgb: 245 244 240;  /* #F5F4F0 */
-  --bg-muted-rgb:    240 238 233;  /* #F0EEE9 */
-  --bg-page:       rgb(var(--bg-page-rgb));
-  --bg-surface:    rgb(var(--bg-surface-rgb));
-  --bg-elevated:   rgb(var(--bg-elevated-rgb));
-  --bg-muted:      rgb(var(--bg-muted-rgb));
-  --border:        #E5E3DC;
-  --border-subtle: #EFEDE8;
-  --fg:            #1C1917;
-  --fg-muted:      #57534E;
-  --fg-subtle:     #736D68;
-  --accent-text:   #B93B0A;
-  --shadow-card:   0 2px 12px rgba(0,0,0,0.06);
-  --shadow-hover:  0 16px 48px rgba(234,88,12,0.18);
-  --nav-bg:        rgba(250,250,248,0.92);
-  --nav-border:    #E5E3DC;
-  --iso-line:      rgba(0,0,0,0.09);
-}
-
-.dark {
-  --bg-page-rgb:     12 10 9;      /* #0C0A09 */
-  --bg-surface-rgb:  28 25 23;     /* #1C1917 */
-  --bg-elevated-rgb: 41 37 36;     /* #292524 */
-  --bg-muted-rgb:    60 56 54;     /* #3C3836 */
-  --bg-page:       rgb(var(--bg-page-rgb));
-  --bg-surface:    rgb(var(--bg-surface-rgb));
-  --bg-elevated:   rgb(var(--bg-elevated-rgb));
-  --bg-muted:      rgb(var(--bg-muted-rgb));
-  --border:        rgba(255,255,255,0.08);
-  --border-subtle: rgba(255,255,255,0.05);
-  --fg:            #FAF9F7;
-  --fg-muted:      #A8A29E;
-  --fg-subtle:     #9A948F;
-  --accent-text:   #F97316;
-  --shadow-card:   0 2px 12px rgba(0,0,0,0.3);
-  --shadow-hover:  0 16px 48px rgba(234,88,12,0.25);
-  --nav-bg:        rgba(12,10,9,0.92);
-  --nav-border:    rgba(255,255,255,0.07);
-  --iso-line:      rgba(255,255,255,0.045);
-}
+/* ── Pano di Terra ──
+   Cada secção é uma banda tecida, cosida à seguinte. Duas tintas: índigo e algodão.
+   O amarelo só aparece no que abre o WhatsApp. */
 
 @layer base {
   html {
-    color-scheme: light dark;
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
   }
 
   body {
-    background-color: var(--bg-page);
-    color: var(--fg);
-    @apply font-body antialiased;
+    @apply bg-algodao font-sans text-indigo antialiased;
+    font-feature-settings: 'tnum' 0;
   }
 
-  /* Anel de foco só para teclado (o rato não o mostra) */
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Anel de foco só para teclado; claro sobre índigo e preto, índigo sobre algodão */
   :focus-visible {
-    outline: 2px solid var(--accent-text);
+    outline: 3px solid #22327A;
     outline-offset: 3px;
+  }
+  .banda-escura :focus-visible,
+  .banda-preta :focus-visible {
+    outline-color: #F3F2EC;
   }
 
   ::selection {
-    background: rgba(234, 88, 12, 0.2);
-    color: #1c1917;
+    background: #22327A;
+    color: #F3F2EC;
+  }
+  .banda-escura ::selection,
+  .banda-preta ::selection {
+    background: #F3F2EC;
+    color: #141C44;
   }
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: #EA580C var(--bg-elevated);
+    scrollbar-color: #22327A #E4E2D8;
   }
-  *::-webkit-scrollbar { width: 5px; }
-  *::-webkit-scrollbar-track { background: var(--bg-elevated); }
-  *::-webkit-scrollbar-thumb { background: #EA580C; border-radius: 3px; }
+  *::-webkit-scrollbar { width: 8px; height: 8px; }
+  *::-webkit-scrollbar-track { background: #E4E2D8; }
+  *::-webkit-scrollbar-thumb { background: #22327A; }
+
+  ::placeholder {
+    color: #5A6699;
+    opacity: 1;
+  }
+
+  input, textarea, button, select {
+    font: inherit;
+  }
+
+  a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 2px;
+  }
 }
 
 @layer components {
+  /* ── Bandas ── */
+  .banda-clara { @apply bg-algodao text-indigo; }
+  .banda-escura { @apply bg-indigo text-algodao; }
+  .banda-preta { @apply bg-preto text-algodao; }
 
-  .section-label {
-    @apply font-mono text-[11px] tracking-[5px] text-accent uppercase mb-4
-           inline-flex items-center gap-2;
-  }
-
-  .section-title {
-    @apply text-3xl md:text-5xl font-display font-bold tracking-tight mb-8;
-    color: var(--fg);
+  .moldura {
+    @apply mx-auto w-full max-w-pano px-5 sm:px-8 lg:px-12;
   }
 
-  /* Card adaptativo ao tema */
-  .card-hover {
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-card);
-    @apply rounded-2xl transition-all duration-300
-           hover:-translate-y-2
-           hover:border-brand/30;
+  /* ── Tipografia: a largura da letra faz a hierarquia ── */
+  .letra-larga {
+    font-stretch: 125%;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
   }
-  .card-hover:hover {
-    box-shadow: var(--shadow-hover);
+  .letra-estreita {
+    font-stretch: 75%;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
-
-  .btn-primary {
-    @apply inline-flex items-center justify-center px-8 py-4 rounded-2xl
-           bg-brand-dark text-white text-sm font-bold tracking-wide cursor-pointer
-           transition-all duration-200
-           hover:bg-brand-800 hover:scale-[1.03]
-           hover:shadow-[0_8px_32px_rgba(234,88,12,0.40)]
-           active:scale-[0.98];
+  .numeros {
+    font-variant-numeric: tabular-nums lining-nums;
   }
 
-  .btn-secondary {
-    @apply inline-flex items-center justify-center px-8 py-4 rounded-2xl
-           border-2 border-accent text-accent bg-transparent
-           text-sm font-bold tracking-wide cursor-pointer
-           transition-all duration-200
-           hover:bg-brand-dark hover:border-brand-dark hover:text-white
-           active:scale-[0.98];
+  .titulo-banda {
+    @apply letra-larga text-[clamp(2rem,4.4vw,3.75rem)];
   }
 
-  .input-field {
-    width: 100%;
-    background-color: var(--bg-surface);
-    border: 2px solid var(--border);
-    color: var(--fg);
-    @apply px-5 py-4 rounded-xl
-           text-[15px] font-body outline-none transition-all duration-200
-           focus:border-brand focus:shadow-[0_0_0_4px_rgba(234,88,12,0.12)];
+  /* ── Costuras (os pontos que unem as bandas) ── */
+  .costura {
+    height: 2px;
+    background-image: repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 18px);
   }
-  .input-field::placeholder {
-    color: var(--fg-subtle);
+  .costura-v {
+    width: 2px;
+    background-image: repeating-linear-gradient(180deg, currentColor 0 10px, transparent 10px 18px);
   }
 
-  .glow-orb {
-    @apply absolute rounded-full pointer-events-none blur-[80px];
+  /* Tiras cosidas lado a lado (loja, galeria). Cada tira tem ponto em cima e à esquerda;
+     o contentor .tiras esconde os da orla, e só ficam as costuras entre tiras. */
+  .tiras {
+    overflow: hidden;
+  }
+  .tiras > * {
+    margin: -2px 0 0 -2px;
+  }
+  .tira {
+    position: relative;
+  }
+  .tira::before,
+  .tira::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+    color: #22327A;
+  }
+  .tira::before {
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 2px;
+    background-image: repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 18px);
+  }
+  .tira::after {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    background-image: repeating-linear-gradient(180deg, currentColor 0 10px, transparent 10px 18px);
+  }
+  .banda-escura .tira::before,
+  .banda-escura .tira::after,
+  .banda-preta .tira::before,
+  .banda-preta .tira::after {
+    color: #5A6699;
+  }
+
+  /* ── Acções ── */
+  /* Amarelo = abre o WhatsApp. Nada mais usa esta cor. */
+  .accao-whatsapp {
+    @apply inline-flex min-h-[3.25rem] items-center justify-center gap-2.5 bg-amarelo px-6 text-[0.95rem]
+           font-bold text-indigo transition-[background-color,transform] duration-150
+           hover:bg-amarelo-forte active:translate-y-px disabled:cursor-wait disabled:opacity-70;
+    font-stretch: 112%;
+  }
+
+  .accao-linha {
+    @apply inline-flex min-h-[3.25rem] items-center justify-center gap-2 border-2 border-current px-6 text-[0.95rem]
+           font-bold transition-colors duration-150;
+    font-stretch: 112%;
+  }
+  .banda-clara .accao-linha:hover { @apply bg-indigo text-algodao; border-color: #141C44; }
+  .banda-escura .accao-linha:hover,
+  .banda-preta .accao-linha:hover { @apply bg-algodao text-indigo; border-color: #F3F2EC; }
+
+  .ligacao {
+    @apply font-bold underline decoration-2 underline-offset-[0.25em] transition-colors;
+  }
+  .banda-clara .ligacao:hover { @apply text-indigo-tinta; }
+  .banda-escura .ligacao:hover { @apply text-algodao; text-decoration-color: #F2C230; }
+
+  /* ── Campos de formulário: tecido liso com aresta cosida ── */
+  .campo {
+    @apply w-full border-2 border-indigo bg-algodao px-4 py-3.5 text-base text-indigo outline-none
+           transition-[box-shadow] duration-150;
+  }
+  .campo:focus-visible,
+  .campo:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #F3F2EC, 0 0 0 6px #22327A;
+  }
+  .campo[aria-invalid='true'] {
+    border-color: #9B1C1C;
+  }
+
+  .rotulo {
+    @apply letra-estreita mb-2 block text-[0.8rem] text-indigo;
+  }
+
+  .erro {
+    @apply mt-2 text-sm font-semibold text-[#9B1C1C];
   }
 
   /* Link "Saltar para o conteúdo": invisível até receber foco pelo teclado */
   .skip-link {
-    @apply fixed left-4 top-4 z-[100] -translate-y-24 rounded-xl bg-brand-dark px-5 py-3
-           text-sm font-bold text-white transition-transform focus:translate-y-0;
-  }
-
-  /* Painel de info (ex: sobre page) */
-  .info-card {
-    background-color: var(--bg-elevated);
-    border: 1px solid var(--border);
-    @apply rounded-2xl p-6;
+    @apply fixed left-4 top-4 z-[100] -translate-y-24 bg-indigo px-5 py-3 text-sm font-bold text-algodao
+           transition-transform focus:translate-y-0;
   }
 }
 
 @layer utilities {
-  .gradient-text {
-    @apply bg-gradient-to-r from-brand to-orange-400 bg-clip-text text-transparent;
+  /* Faixa interrompida (404): pára num losango inteiro (motivo de 20 px) */
+  .faixa-partida {
+    width: 62%;
+    width: round(down, 62%, 20px);
   }
 
-  .text-balance { text-wrap: balance; }
-
-  /* Grelha de pontos subtil */
-  .dot-grid {
-    background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
-    background-size: 28px 28px;
-  }
-
-  /* Grelha isométrica — linhas diagonais em perspectiva 3D */
-  .iso-grid {
-    background-image:
-      linear-gradient(30deg,  var(--iso-line) 1px, transparent 1px),
-      linear-gradient(150deg, var(--iso-line) 1px, transparent 1px),
-      linear-gradient(90deg,  var(--iso-line) 1px, transparent 1px);
-    background-size: 40px 70px, 40px 70px, 40px 70px;
-  }
-
-  /* Grelha de linhas laranja */
-  .orange-grid {
-    background-image:
-      linear-gradient(rgba(234,88,12,0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(234,88,12,0.08) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
-
-  /* Secção com fundo laranja vivo */
-  .section-orange {
-    background: linear-gradient(135deg, #EA580C 0%, #F97316 50%, #FB923C 100%);
-  }
-  /* Sobre o laranja, o anel de foco laranja não se vê */
-  .section-orange :focus-visible {
-    outline-color: #FFFFFF;
-  }
-  /* Lightbox da galeria: fundo sempre escuro, anel de foco branco */
+  /* Lightbox da galeria: fundo sempre escuro, anel de foco claro */
   .lightbox :focus-visible {
-    outline-color: #FFFFFF;
+    outline-color: #F3F2EC;
   }
-  .lightbox[open],
-  .lightbox-media {
-    animation: lightbox-entra 0.2s ease-out;
+  .lightbox[open] {
+    animation: lightbox-entra 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   }
   @keyframes lightbox-entra {
-    from { opacity: 0; transform: scale(0.98); }
+    from { opacity: 0; clip-path: inset(0 0 100% 0); }
+    to { opacity: 1; clip-path: inset(0 0 0 0); }
   }
-  /* A página por trás não desliza com o lightbox aberto */
   html:has(.lightbox[open]) {
     overflow: hidden;
-    /* Guarda o lugar da barra de deslocamento, para a página não saltar para o lado */
     scrollbar-gutter: stable;
   }
-
-  /* Helper de borda via CSS var (os fundos bg-page/surface/elevated/muted
-     são gerados pelo Tailwind a partir dos canais RGB, com opacidade) */
-  .border-theme   { border-color: var(--border) !important; }
+  .lightbox::backdrop {
+    background: transparent;
+  }
 }
 
-/* Animações */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(28px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* ── O momento de movimento: o título tece-se de baixo para cima, por camadas ── */
+@keyframes tecer {
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
 }
-@keyframes floatSlow {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-14px); }
-}
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.7; }
-  50%       { opacity: 1; }
-}
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-@keyframes spinSlow {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+.tecer-entrada {
+  animation: tecer 0.9s steps(9, end) both;
 }
 
-/* Quem pede menos movimento ao sistema vê tudo estático
-   (o FadeSection também mostra o conteúdo logo; ver FadeSection.tsx) */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

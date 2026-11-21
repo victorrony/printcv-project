@@ -1,120 +1,171 @@
-import { HeroSection } from '@/components/sections/HeroSection'
-import { ProcessSection } from '@/components/sections/ProcessSection'
-import { FadeSection } from '@/components/ui/FadeSection'
-import { ProductCard } from '@/components/ProductCard'
-import { GalleryGrid } from '@/components/GalleryGrid'
-import { getProdutos, getGaleria } from '@/lib/conteudo'
 import Link from 'next/link'
-import { Package } from 'lucide-react'
+import { MessageCircle } from 'lucide-react'
+import { getGaleria, getProdutos } from '@/lib/conteudo'
+import { formatData } from '@/lib/format'
+import { SITE, linkWhatsApp } from '@/lib/site'
+import { Emenda } from '@/components/pano/Padroes'
+import { Tear } from '@/components/pano/Tear'
+import { PedidoRapido } from '@/components/PedidoRapido'
+import { TiraProduto } from '@/components/TiraProduto'
+import { BandaTimelapses } from '@/components/BandaTimelapses'
+import { MosaicoOficina } from '@/components/MosaicoOficina'
+
+const PASSOS = [
+  {
+    titulo: 'Conte-nos a ideia',
+    texto: 'Uma frase, uma fotografia ou um ficheiro STL, enviados pelo WhatsApp.',
+  },
+  {
+    titulo: 'Combinamos preço e prazo',
+    texto: 'Antes de imprimir, fica a saber quanto custa e quando fica pronta.',
+  },
+  {
+    titulo: 'Imprimimos camada a camada',
+    texto: 'Na Bambu Lab A1, em PLA, com várias cores quando a peça as pede.',
+  },
+  {
+    titulo: 'Combinamos a entrega',
+    texto: 'Acertamos consigo como a peça lhe chega às mãos.',
+  },
+]
 
 export default function HomePage() {
-  const produtos = getProdutos({ destaque: true, disponivel: true })
-  const galeriaItems = getGaleria({ destaque: true })
+  const galeria = getGaleria()
+  const videos = galeria.filter((g) => g.video_timelapse)
+  const tear = videos.find((g) => g.video_timelapse === '/videos/impressao-multicolor.mp4') ?? videos[0]
+  // Na banda preta, o vídeo do tear fica por último: abre com outro
+  const timelapses = [...videos.filter((v) => v !== tear), ...(tear ? [tear] : [])]
+  const fotos = galeria.filter((g) => !g.portfolio && !g.video_timelapse && g.imagens[0])
+  // A tira larga é a do produto com mais fotos reais; as outras seguem a ordem do catálogo
+  const produtos = getProdutos({ disponivel: true })
+  const larga = [...produtos].sort((a, b) => b.imagens.length - a.imagens.length)[0]
+  const tiras = larga ? [larga, ...produtos.filter((p) => p !== larga)] : produtos
 
   return (
     <>
-      <HeroSection />
-      <ProcessSection />
-
-      {/* Featured Products */}
-      <section className="py-[120px] px-6 relative overflow-hidden">
-        {/* Background iso-grid */}
-        <div className="absolute inset-0 iso-grid opacity-40" />
-        <div className="absolute top-1/2 left-[-200px] w-[600px] h-[600px] rounded-full bg-brand/[0.05] blur-[140px] pointer-events-none -translate-y-1/2" />
-        <div className="absolute top-1/2 right-[-200px] w-[500px] h-[500px] rounded-full bg-purple-500/[0.04] blur-[120px] pointer-events-none -translate-y-1/2" />
-        <div className="relative max-w-6xl mx-auto">
-        <FadeSection>
-          <p className="section-label">▸ Destaques</p>
-          <h2 className="section-title">Produtos em destaque</h2>
-        </FadeSection>
-
-        {produtos.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {produtos.slice(0, 6).map((produto, i) => (
-              <FadeSection key={produto.id} delay={i * 0.1}>
-                <ProductCard produto={produto} />
-              </FadeSection>
-            ))}
-          </div>
-        ) : (
-          <FadeSection>
-            <div className="text-center py-20 rounded-2xl border-2 border-dashed border-theme">
-              <Package size={36} strokeWidth={1.5} className="mx-auto mb-4 text-accent" aria-hidden="true" />
-              <p className="text-fg-muted text-sm">
-                Novos produtos em breve.
-              </p>
+      {/* ── O topo: o tear ── */}
+      <section aria-labelledby="titulo-inicio" className="banda-escura">
+        <div className="moldura grid items-center gap-12 py-14 md:py-20 lg:grid-cols-[1.3fr_1fr] lg:gap-14 lg:py-24">
+          <div>
+            <h1 id="titulo-inicio" className="letra-larga tecer-entrada text-[clamp(2.6rem,5.2vw,5.25rem)]">
+              Imprimimos em 3D, camada a camada, na Praia.
+            </h1>
+            <p className="mt-6 max-w-[44ch] text-[1.15rem] leading-relaxed text-indigo-claro">
+              Lembranças, peças por medida, brindes para empresas e protótipos. Diga-nos o que precisa e
+              continuamos a conversa no WhatsApp.
+            </p>
+            <div className="mt-9">
+              <PedidoRapido />
             </div>
-          </FadeSection>
-        )}
-
-        <FadeSection delay={0.3}>
-          <div className="text-center mt-12">
-            <Link href="/loja" className="btn-secondary">
-              Ver todos os produtos
-            </Link>
+            <p className="mt-6 flex flex-wrap gap-x-7 gap-y-2 text-[1rem]">
+              <Link href="/loja" className="ligacao">
+                Ver a loja
+              </Link>
+              <Link href="/orcamento" className="ligacao">
+                Pedido com fotografia
+              </Link>
+            </p>
           </div>
-        </FadeSection>
+
+          {tear?.video_timelapse && (
+            <Tear
+              src={tear.video_timelapse}
+              poster={tear.imagens[0]}
+              titulo={tear.titulo}
+              legenda={`${formatData(tear.data)} · vídeo acelerado`}
+            />
+          )}
         </div>
       </section>
 
-      {/* Gallery / Timelapse Preview */}
-      <section className="py-[120px] px-6 relative overflow-hidden bg-elevated">
-        {/* Orbs decorativos */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-brand/[0.06] blur-[100px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal/[0.05] blur-[120px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-purple-500/[0.04] blur-[100px] rounded-full pointer-events-none" />
-        {/* Linhas horizontais subtis */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'repeating-linear-gradient(0deg, var(--border) 0px, var(--border) 1px, transparent 1px, transparent 60px)'}} />
-        <div className="max-w-6xl mx-auto relative">
-          <FadeSection>
-            <p className="section-label">▸ Making of</p>
-            <h2 className="section-title">Trabalhos reais da nossa oficina</h2>
-            <p className="text-fg-muted text-[15px] max-w-[500px] leading-relaxed mb-12">
-              Peças reais, impressas e acabadas na nossa oficina. Veja a impressora
-              a trabalhar e o resultado final.
-            </p>
-          </FadeSection>
+      <Emenda motivo="losango" tom="escuro" altura={20} />
 
-          <GalleryGrid items={galeriaItems} />
+      {/* ── Loja ── */}
+      <section aria-labelledby="titulo-loja" className="banda-clara py-20 md:py-28">
+        <div className="moldura">
+          <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
+            <h2 id="titulo-loja" className="titulo-banda max-w-[18ch]">
+              Peças prontas a encomendar
+            </h2>
+            <Link href="/loja" className="ligacao text-[1.05rem]">
+              Ver a loja toda
+            </Link>
+          </div>
+          <div className="tiras">
+            <div className="grid grid-cols-2 lg:grid-cols-5">
+              {tiras.map((produto, i) => (
+                <TiraProduto
+                  key={produto.id}
+                  produto={produto}
+                  larga={produto === larga}
+                  // Com a tira larga a ocupar uma linha, as restantes vão aos pares; a que sobra estica
+                  sozinha={i === tiras.length - 1 && (tiras.length - 1) % 2 === 1}
+                  prioridade={i === 0}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <FadeSection delay={0.4}>
-            <div className="text-center mt-12">
-              <Link href="/galeria" className="btn-secondary">
-                Ver galeria completa
+      {/* ── A banda preta: os timelapses ── */}
+      <BandaTimelapses videos={timelapses} />
+
+      {/* ── A oficina ── */}
+      <section aria-labelledby="titulo-oficina" className="banda-clara py-20 md:py-28">
+        <div className="moldura">
+          <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
+            <h2 id="titulo-oficina" className="titulo-banda max-w-[16ch]">
+              Saído da oficina
+            </h2>
+            <Link href="/galeria" className="ligacao text-[1.05rem]">
+              Ver os {galeria.length} trabalhos
+            </Link>
+          </div>
+          <MosaicoOficina itens={fotos} />
+        </div>
+      </section>
+
+      <Emenda motivo="dente" tom="claro" altura={14} />
+
+      {/* ── Como funciona + fecho ── */}
+      <section aria-labelledby="titulo-passos" className="banda-escura py-20 md:py-28">
+        <div className="moldura">
+          <h2 id="titulo-passos" className="titulo-banda max-w-[18ch]">
+            Da ideia à peça, em quatro passos
+          </h2>
+          <div className="tiras mt-12">
+            <ol className="grid sm:grid-cols-2 lg:grid-cols-4">
+              {PASSOS.map((passo, i) => (
+                <li key={passo.titulo} className="tira px-6 pb-8 pt-7">
+                  <span className="letra-larga numeros block text-[3rem] text-indigo-claro" aria-hidden="true">
+                    {i + 1}
+                  </span>
+                  <h3 className="mt-4 text-[1.25rem] font-bold leading-snug">{passo.titulo}</h3>
+                  <p className="mt-2 leading-relaxed text-indigo-claro">{passo.texto}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="mt-20 grid items-end gap-8 lg:grid-cols-[1.4fr_1fr]">
+            <p className="letra-larga text-[clamp(2.25rem,4.8vw,4.25rem)]">Tem uma ideia? Comece por aqui.</p>
+            <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
+              <a
+                href={linkWhatsApp(SITE.mensagemWhatsApp)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="accao-whatsapp"
+              >
+                <MessageCircle size={18} aria-hidden="true" />
+                Falar pelo WhatsApp
+              </a>
+              <Link href="/orcamento" className="accao-linha">
+                Pedido com fotografia
               </Link>
             </div>
-          </FadeSection>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-[120px] px-6 section-orange relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px)', backgroundSize: '28px 28px'}} />
-        <div className="absolute top-[-80px] right-[-80px] w-[400px] h-[400px] rounded-full bg-white/[0.06] blur-[80px] pointer-events-none" />
-        <div className="absolute bottom-[-60px] left-[-60px] w-[300px] h-[300px] rounded-full bg-white/[0.04] blur-[60px] pointer-events-none" />
-        <FadeSection>
-          <div className="max-w-2xl mx-auto text-center relative">
-            <p className="font-mono text-[11px] tracking-[5px] text-white/70 uppercase mb-4 inline-flex items-center gap-2">
-              ▸ Pronto para começar?
-            </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-6 text-white">
-              A sua peça, à sua medida
-            </h2>
-            <p className="text-white/75 text-[15px] leading-relaxed mb-10">
-              Descreva o que precisa e respondemos em até 24 horas com uma estimativa
-              de preço e prazo de produção.
-            </p>
-            <Link
-              href="/orcamento"
-              className="inline-flex items-center justify-center px-10 py-4 rounded-2xl
-                         bg-white text-brand-dark text-sm font-bold tracking-wide cursor-pointer
-                         transition-all duration-200 hover:scale-[1.03]
-                         hover:shadow-[0_8px_32px_rgba(0,0,0,0.2)] active:scale-[0.98]"
-            >
-              Pedir Orçamento Grátis
-            </Link>
           </div>
-        </FadeSection>
+        </div>
       </section>
     </>
   )

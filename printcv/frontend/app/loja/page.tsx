@@ -1,62 +1,98 @@
-import { getProdutos, getCategorias } from '@/lib/conteudo'
-import { ProductCard } from '@/components/ProductCard'
-import { FadeSection } from '@/components/ui/FadeSection'
-import { CategoryFilter } from './CategoryFilter'
-import { Package } from 'lucide-react'
+import Link from 'next/link'
 import type { Metadata } from 'next'
+import { getCategorias, getProdutos } from '@/lib/conteudo'
+import { TiraProduto } from '@/components/TiraProduto'
+import { CabecalhoPagina } from '@/components/CabecalhoPagina'
 
 export const metadata: Metadata = {
   title: 'Loja — PrintCV',
-  description: 'Peças impressas em 3D disponíveis para compra em Cabo Verde.',
+  description: 'Peças impressas em 3D na Praia, Cabo Verde, prontas a encomendar pelo WhatsApp.',
 }
 
-export default function LojaPage({
-  searchParams,
-}: {
-  searchParams: { categoria?: string | string[] }
-}) {
-  // ?categoria= vazio ou repetido conta como "Todos"
-  const categoria =
-    typeof searchParams.categoria === 'string' && searchParams.categoria
-      ? searchParams.categoria
-      : undefined
-  const produtos = getProdutos({ categoria })
+export default function LojaPage({ searchParams }: { searchParams: { categoria?: string | string[] } }) {
   const categorias = getCategorias()
+  // ?categoria= vazio, repetido ou desconhecido conta como "Todas"
+  const pedida = typeof searchParams.categoria === 'string' ? searchParams.categoria : undefined
+  const categoria = categorias.find((c) => c.slug === pedida)?.slug
+  const produtos = getProdutos({ categoria })
+  const todos = getProdutos()
+
+  const separadores = [
+    { slug: undefined, nome: 'Todas', quantos: todos.length },
+    ...categorias.map((c) => ({
+      slug: c.slug,
+      nome: c.nome,
+      quantos: todos.filter((p) => p.categoria?.slug === c.slug).length,
+    })),
+  ].filter((s) => s.quantos > 0)
 
   return (
-    <section className="pt-[120px] pb-[80px] px-6 md:px-0 max-w-6xl mx-auto">
-      <FadeSection>
-        <p className="section-label">▸ Catálogo</p>
-        <h1 className="section-title">Produtos</h1>
-      </FadeSection>
+    <>
+      <CabecalhoPagina
+        titulo="Loja"
+        texto="Peças já desenhadas e impressas na oficina. Escolha uma e encomende pelo WhatsApp."
+      >
+        <nav aria-label="Categorias" className="mt-10">
+          <ul className="flex flex-wrap gap-2">
+            {separadores.map((s) => {
+              const activo = s.slug === categoria
+              return (
+                <li key={s.nome}>
+                  <Link
+                    href={s.slug ? `/loja?categoria=${s.slug}` : '/loja'}
+                    aria-current={activo ? 'page' : undefined}
+                    scroll={false}
+                    className={`inline-flex min-h-[2.75rem] items-center gap-2 border-2 px-4 text-[0.95rem] font-semibold transition-colors ${
+                      activo
+                        ? 'border-algodao bg-algodao text-indigo'
+                        : 'border-indigo-fio hover:border-algodao'
+                    }`}
+                  >
+                    {s.nome}
+                    <span className={`numeros text-sm ${activo ? 'text-algodao-texto' : 'text-indigo-claro'}`}>
+                      {s.quantos}
+                    </span>
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+        </nav>
+      </CabecalhoPagina>
 
-      <FadeSection delay={0.1}>
-        <CategoryFilter
-          categorias={categorias}
-          activeSlug={categoria}
-        />
-      </FadeSection>
-
-      {produtos.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {produtos.map((produto, i) => (
-            <FadeSection key={produto.id} delay={i * 0.08}>
-              <ProductCard produto={produto} nivelTitulo="h2" />
-            </FadeSection>
-          ))}
+      <section aria-label="Produtos" className="banda-clara py-14 md:py-20">
+        <div className="moldura">
+          {produtos.length > 0 ? (
+            <div className="tiras">
+              <div className="grid grid-cols-2 lg:grid-cols-4">
+                {produtos.map((produto, i) => (
+                  <TiraProduto
+                    key={produto.id}
+                    produto={produto}
+                    nivelTitulo="h2"
+                    prioridade={i < 2}
+                    sozinha={i === produtos.length - 1 && produtos.length % 2 === 1}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="border-2 border-indigo px-6 py-16 text-center">
+              <p className="text-[1.1rem]">Ainda não há peças nesta categoria.</p>
+              <Link href="/loja" className="ligacao mt-4 inline-block">
+                Ver todas as peças
+              </Link>
+            </div>
+          )}
+          <p className="mt-10 max-w-[60ch] text-algodao-texto">
+            Não encontra o que procura?{' '}
+            <Link href="/orcamento" className="ligacao text-indigo">
+              Peça uma peça por medida
+            </Link>
+            .
+          </p>
         </div>
-      ) : (
-        <FadeSection>
-          <div className="text-center py-20 rounded-2xl border-2 border-dashed border-theme mt-8">
-            <Package size={36} strokeWidth={1.5} className="mx-auto mb-4 text-accent" aria-hidden="true" />
-            <p className="text-fg-muted text-sm">
-              {categoria
-                ? 'Nenhum produto nesta categoria ainda.'
-                : 'Novos produtos em breve.'}
-            </p>
-          </div>
-        </FadeSection>
-      )}
-    </section>
+      </section>
+    </>
   )
 }
